@@ -1,5 +1,5 @@
 {
-    "name": "sendit/bliskapaczka-api-client",
+    "name": "bliskapaczka/bliskapaczka-api-client",
     "description": "BliczkaPaczka API Client",
     "require": {
         "psr/log": "~1.0.0"
