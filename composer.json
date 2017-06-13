@@ -13,7 +13,7 @@
         "phploc/phploc":"^3.0"
     },
     "type": "api client",
-    "version": "0.1.0",
+    "version": "1.0.0",
     "autoload": {
         "files": ["src/helpers.php"],
         "psr-4": {
