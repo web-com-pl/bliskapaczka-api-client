@@ -34,8 +34,6 @@ class ApiCaller
      */
     public function doCall(array $options)
     {
-        // var_dump($options);
-
         $curl = curl_init();
 
         $options[CURLOPT_RETURNTRANSFER] = 1;
