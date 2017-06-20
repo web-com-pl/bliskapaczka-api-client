@@ -55,13 +55,6 @@ class OrderTest extends TestCase
         $this->assertEquals('Bliskapaczka\ApiClient\Mappers\Order', get_class($order));
     }
 
-    public function testObjectToJson()
-    {
-        $order = Order::createFromArray($this->orderData);
-
-        $this->assertTrue(is_json($order->toJson()));
-    }
-
     /**
      * @expectedException Bliskapaczka\ApiClient\Exception
      * @expectedExceptionMessage Invalid phone number
@@ -102,9 +95,45 @@ class OrderTest extends TestCase
      * @expectedException Bliskapaczka\ApiClient\Exception
      * @expectedExceptionMessageRegExp /Invalid \w+/
      */
-    public function testRestOfPropertiesValidation()
+    public function testReceiverFirstNameValidation()
     {
-        $this->orderData['senderFlatNumber'] = '';
+        $this->orderData['receiverFirstName'] = '';
+
+        $order = Order::createFromArray($this->orderData);
+        $order->validate();
+    }
+
+    /**
+     * @expectedException Bliskapaczka\ApiClient\Exception
+     * @expectedExceptionMessageRegExp /Invalid \w+/
+     */
+    public function testReceiverLastNameValidation()
+    {
+        $this->orderData['receiverLastName'] = '';
+
+        $order = Order::createFromArray($this->orderData);
+        $order->validate();
+    }
+
+    /**
+     * @expectedException Bliskapaczka\ApiClient\Exception
+     * @expectedExceptionMessageRegExp /Invalid \w+/
+     */
+    public function testOperatorNameValidation()
+    {
+        $this->orderData['operatorName'] = '';
+
+        $order = Order::createFromArray($this->orderData);
+        $order->validate();
+    }
+
+    /**
+     * @expectedException Bliskapaczka\ApiClient\Exception
+     * @expectedExceptionMessageRegExp /Invalid \w+/
+     */
+    public function testDestinationCodeValidation()
+    {
+        $this->orderData['destinationCode'] = '';
 
         $order = Order::createFromArray($this->orderData);
         $order->validate();

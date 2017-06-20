@@ -26,7 +26,6 @@ class ValidatorTest extends TestCase
         $this->assertTrue(Order\Validator::email('bob@example.com'));
     }
 
-
     /**
      * @expectedException Bliskapaczka\ApiClient\Exception
      * @expectedExceptionMessage Invalid phone number

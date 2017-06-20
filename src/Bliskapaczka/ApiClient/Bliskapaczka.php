@@ -22,7 +22,12 @@ class Bliskapaczka
     /**
      * @const URL for the api
      */
-    const API_URL = 'http://api.bliskapaczka.test';
+    const API_URL = 'https://api.bliskapaczka.pl';
+
+    /**
+     * @const URL for the sandbox api
+     */
+    const SANDBOX_API_URL = 'https://api.sandbox-bliskapaczka.pl';
 
     /**
  * @var ApiCaller
@@ -35,10 +40,10 @@ class Bliskapaczka
      * @param string $bearer
      * @param string $apiUrl
      */
-    public function __construct($bearer, $apiUrl = self::API_URL)
+    public function __construct($bearer, $mode = 'prod')
     {
         $this->bearer = (string)$bearer;
-        $this->apiUrl = (string)$apiUrl;
+        $this->apiUrl = (string)$this->getApiUrl($mode);
         $this->logger = new Logger();
     }
 
@@ -54,6 +59,29 @@ class Bliskapaczka
         }
 
         return $this->apiCaller;
+    }
+
+    /**
+     * Get API url
+     *
+     * @param string $mode
+     * @return string
+     */
+    public function getApiUrl($mode)
+    {
+        $url = '';
+
+        switch ($mode) {
+            case 'test':
+                $url = self::SANDBOX_API_URL;
+                break;
+
+            case 'prod':
+                $url = self::API_URL;
+                break;
+        }
+
+        return $url;
     }
 
     /**
