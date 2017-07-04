@@ -25,28 +25,24 @@ $orderData = [
     "codValue" => 0,
     "insuranceValue" => 0,
     "additionalInformation" => "string",
-    "parcels" => [
-        [
-            "dimensions" => [
-                "height" => 20,
-                "length" => 20,
-                "width" => 20,
-                "weight" => 2
-            ]
+    "parcel" => [
+        "dimensions" => [
+            "height" => 20,
+            "length" => 20,
+            "width" => 20,
+            "weight" => 2
         ]
     ]
 ];
 var_dump($apiClient->createOrder($orderData));
 
 $pricingData = [
-    "parcels" => [
-        [
-            "dimensions" => [
-                "height" => 20,
-                "length" => 20,
-                "width" => 20,
-                "weight" => 2
-            ]
+    "parcel" => [
+        "dimensions" => [
+            "height" => 20,
+            "length" => 20,
+            "width" => 20,
+            "weight" => 2
         ]
     ]
 ];
