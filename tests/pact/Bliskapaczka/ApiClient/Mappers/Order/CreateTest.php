@@ -35,14 +35,12 @@ class CreateTest extends TestCase
             "codValue" => 0,
             "insuranceValue" => 0,
             "additionalInformation" => "string",
-            "parcels" => [
-                [
-                    "dimensions" => [
-                        "height" => 20,
-                        "length" => 20,
-                        "width" => 20,
-                        "weight" => 2
-                    ]
+            "parcel" => [
+                "dimensions" => [
+                    "height" => 20,
+                    "length" => 20,
+                    "width" => 20,
+                    "weight" => 2
                 ]
             ]
         ];
@@ -53,7 +51,8 @@ class CreateTest extends TestCase
 
     public function testCreateOrder()
     {
-        $apiClient = new ApiClient\Bliskapaczka('test-test-test-test', $this->host);
+        $apiClient = new ApiClient\Bliskapaczka('test-test-test-test');
+        $apiClient->setApiUrl($this->host);
 
         $response = json_decode($apiClient->createOrder($this->orderData));
 
@@ -136,16 +135,14 @@ class CreateTest extends TestCase
       "codValue": 0,
       "insuranceValue": 0,
       "additionalInformation": "string",
-      "parcels": [
-        {
-          "dimensions": {
-            "height": 20,
-            "length": 20,
-            "width": 20,
-            "weight": 20
-          }
+      "parcel":{
+        "dimensions": {
+          "height": 20,
+          "length": 20,
+          "width": 20,
+          "weight": 20
         }
-      ],
+      },
       "orderItems": [
         {
           "pricelistItemType": "SHIPMENT",

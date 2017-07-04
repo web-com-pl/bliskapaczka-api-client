@@ -110,7 +110,7 @@ class Order
             }
         }
 
-        # Parcels validation
+        # Parcel validation
         if (!is_array($this->parcel) || !array_key_exists('dimensions', $this->parcel)) {
             throw new \Bliskapaczka\ApiClient\Exception('Invalid parcel', 1);
         }

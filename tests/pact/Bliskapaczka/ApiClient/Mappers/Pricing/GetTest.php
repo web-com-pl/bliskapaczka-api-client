@@ -30,17 +30,17 @@ class GetTest extends TestCase
 
     public function testCreateOrder()
     {
-        $apiClient = new ApiClient\Bliskapaczka('test-test-test-test', $this->host);
+        $apiClient = new ApiClient\Bliskapaczka('test-test-test-test');
+        $apiClient->setApiUrl($this->host);
 
         $response = json_decode($apiClient->getPricing($this->pricingData));
 
-        // $this->assertEquals($this->orderData['senderPhoneNumber'], $response->senderPhoneNumber);
-        // $this->assertEquals($this->orderData['senderEmail'], $response->senderEmail);
-        // $this->assertEquals($this->orderData['senderPostCode'], $response->senderPostCode);
-        // $this->assertEquals($this->orderData['receiverPhoneNumber'], $response->receiverPhoneNumber);
-        // $this->assertEquals($this->orderData['receiverEmail'], $response->receiverEmail);
-
-        // $this->expectOutputString('Deleted interactionsSet interactionsInteractions matched', $this->verification());
+        $this->assertEquals('INPOST', $response[0]->operatorName);
+        $this->assertTrue($response[0]->availabilityStatus);
+        $this->assertEquals('RUCH', $response[1]->operatorName);
+        $this->assertTrue($response[1]->availabilityStatus);
+        $this->assertEquals('POCZTA', $response[2]->operatorName);
+        $this->assertTrue($response[2]->availabilityStatus);
     }
 
     /**

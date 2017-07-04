@@ -43,7 +43,7 @@ class Bliskapaczka
     public function __construct($bearer, $mode = 'prod')
     {
         $this->bearer = (string)$bearer;
-        $this->apiUrl = (string)$this->getApiUrl($mode);
+        $this->setApiUrl((string)$this->getApiUrlForMode($mode));
         $this->logger = new Logger();
     }
 
@@ -62,12 +62,12 @@ class Bliskapaczka
     }
 
     /**
-     * Get API url
+     * Get API url for mode
      *
      * @param string $mode
      * @return string
      */
-    public function getApiUrl($mode)
+    public function getApiUrlForMode($mode)
     {
         $url = '';
 
@@ -82,6 +82,26 @@ class Bliskapaczka
         }
 
         return $url;
+    }
+
+    /**
+     * Return API url
+     *
+     * @return string
+     */
+    public function getApiUrl()
+    {
+        return $this->apiUrl;
+    }
+
+    /**
+     * In some cases we need other API url
+     *
+     * @param string $url
+     */
+    public function setApiUrl($url)
+    {
+        $this->apiUrl = $url;
     }
 
     /**
@@ -123,8 +143,6 @@ class Bliskapaczka
     public function createOrder(array $data)
     {
         $url = 'order';
-
-        $data['parcels'] = array_values($data['parcels']);
 
         $order = Order::createFromArray($data);
         $order->validate();
