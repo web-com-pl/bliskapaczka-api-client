@@ -29,7 +29,7 @@ class Order
     private $codValue;
     private $insuranceValue;
     private $additionalInformation;
-    private $parcels;
+    private $parcel;
 
     /**
      * Magic method implementation
@@ -111,16 +111,16 @@ class Order
         }
 
         # Parcels validation
-        if (!is_array($this->parcels) || !array_key_exists('dimensions', $this->parcels[0])) {
-            throw new \Bliskapaczka\ApiClient\Exception('Invalid parcels', 1);
+        if (!is_array($this->parcel) || !array_key_exists('dimensions', $this->parcel)) {
+            throw new \Bliskapaczka\ApiClient\Exception('Invalid parcel', 1);
         }
 
         $dimensions = ['height', 'length', 'width', 'weight'];
 
         # Parcel dimesnsions should be graten than 0
         foreach ($dimensions as $dimension) {
-            if ($this->parcels[0]['dimensions'][$dimension] <= 0) {
-                throw new \Bliskapaczka\ApiClient\Exception('Dimesnion must be grate than 0', 1);
+            if ($this->parcel['dimensions'][$dimension] <= 0) {
+                throw new \Bliskapaczka\ApiClient\Exception('Dimesnion must be greater than 0', 1);
             }
         }
 

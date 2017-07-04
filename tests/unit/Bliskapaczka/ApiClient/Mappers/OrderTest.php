@@ -29,14 +29,12 @@ class OrderTest extends TestCase
             "codValue" => 0,
             "insuranceValue" => 0,
             "additionalInformation" => "string",
-            "parcels" => [
-                [
-                    "dimensions" => [
-                        "height" => 20,
-                        "length" => 20,
-                        "width" => 20,
-                        "weight" => 2
-                    ]
+            "parcel" => [
+                "dimensions" => [
+                    "height" => 20,
+                    "length" => 20,
+                    "width" => 20,
+                    "weight" => 2
                 ]
             ]
         ];
@@ -81,11 +79,11 @@ class OrderTest extends TestCase
 
     /**
      * @expectedException Bliskapaczka\ApiClient\Exception
-     * @expectedExceptionMessage Invalid parcels
+     * @expectedExceptionMessage Invalid parcel
      */
     public function testParcelsValidation()
     {
-        $this->orderData['parcels'] = 'string';
+        $this->orderData['parcel'] = 'string';
 
         $order = Order::createFromArray($this->orderData);
         $order->validate();
@@ -141,16 +139,16 @@ class OrderTest extends TestCase
 
     /**
      * @expectedException Bliskapaczka\ApiClient\Exception
-     * @expectedExceptionMessage Dimesnion must be grate than 0
+     * @expectedExceptionMessage Dimesnion must be greater than 0
      */
     public function testParcelDimensionsValidation()
     {
-        $this->orderData['parcels'][0]['dimensions']['height'] = 0;
+        $this->orderData['parcel']['dimensions']['height'] = 0;
 
         $order = Order::createFromArray($this->orderData);
         $order->validate();
 
-        $this->orderData['parcels'][0]['dimensions']['height'] = -1;
+        $this->orderData['parcel']['dimensions']['height'] = -1;
 
         $order = Order::createFromArray($this->orderData);
         $order->validate();
