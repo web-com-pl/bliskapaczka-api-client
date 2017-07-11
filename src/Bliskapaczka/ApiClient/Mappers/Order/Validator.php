@@ -15,7 +15,7 @@ class Validator
     /**
      * Validate email address
      *
-     * @param array $data
+     * @param string $data
      */
     public static function email($data)
     {
@@ -29,7 +29,7 @@ class Validator
     /**
      * Validate phone number
      *
-     * @param array $data
+     * @param string $data
      */
     public static function phone($data)
     {
@@ -40,5 +40,42 @@ class Validator
         }
 
         return true;
+    }
+
+    /**
+     * Validate postcode
+     *
+     * @param string $data
+     */
+    public static function postCode($data)
+    {
+        preg_match('/^\d{2}\-\d{3}$/', $data, $matches);
+
+        if (!is_array($matches) || count($matches) == 0) {
+            throw new \Bliskapaczka\ApiClient\Exception('Invalid post code', 1);
+        }
+
+        return true;
+    }
+
+    /**
+     * Validate parcel
+     *
+     * @param array $data
+     */
+    public static function parcel($data)
+    {
+        if (!is_array($data) || !array_key_exists('dimensions', $data)) {
+            throw new \Bliskapaczka\ApiClient\Exception('Invalid parcel', 1);
+        }
+
+        $dimensions = ['height', 'length', 'width', 'weight'];
+
+        # Parcel dimesnsions should be graten than 0
+        foreach ($dimensions as $dimension) {
+            if ($data['dimensions'][$dimension] <= 0) {
+                throw new \Bliskapaczka\ApiClient\Exception('Dimesnion must be greater than 0', 1);
+            }
+        }
     }
 }

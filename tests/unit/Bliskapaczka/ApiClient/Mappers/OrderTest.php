@@ -67,7 +67,7 @@ class OrderTest extends TestCase
 
     /**
      * @expectedException Bliskapaczka\ApiClient\Exception
-     * @expectedExceptionMessage Invalid sender post code
+     * @expectedExceptionMessage Invalid post code
      */
     public function testSenderPostCodeValidation()
     {

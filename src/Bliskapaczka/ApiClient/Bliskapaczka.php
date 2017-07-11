@@ -38,7 +38,7 @@ class Bliskapaczka
      * Create Bliskapaczka instance
      *
      * @param string $bearer
-     * @param string $apiUrl
+     * @param string $mode
      */
     public function __construct($bearer, $mode = 'prod')
     {

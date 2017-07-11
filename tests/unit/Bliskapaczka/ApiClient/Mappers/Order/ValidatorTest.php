@@ -27,11 +27,60 @@ class ValidatorTest extends TestCase
     }
 
     /**
+     * @dataProvider invalidPhoneNumbers
      * @expectedException Bliskapaczka\ApiClient\Exception
      * @expectedExceptionMessage Invalid phone number
      */
-    public function testSenderPhoneNumberValidation()
+    public function testForInvalidPhoneNumber($phoneNumber)
     {
-        Order\Validator::phone('string');
+        Order\Validator::phone($phoneNumber);
+    }
+
+    public function invalidPhoneNumbers()
+    {
+        return [
+            ['string'],
+            ['604 555 555'],
+            ['608-555-333']
+        ];
+    }
+
+    /**
+     * @dataProvider validPhoneNumbers
+     */
+    public function testForValidPhoneNumber($phoneNumber)
+    {
+        Order\Validator::phone($phoneNumber);
+    }
+
+    public function validPhoneNumbers()
+    {
+        return [
+            ['606567765'],
+            ['505333321']
+        ];
+    }
+
+    /**
+     * @expectedException Bliskapaczka\ApiClient\Exception
+     * @expectedExceptionMessage Invalid post code
+     */
+    public function testForInvalidPostCode()
+    {
+        Order\Validator::postCode('string');
+    }
+
+    public function testForValidPostCode()
+    {
+        Order\Validator::postCode('54-125');
+    }
+
+    /**
+     * @expectedException Bliskapaczka\ApiClient\Exception
+     * @expectedExceptionMessage Invalid parcel
+     */
+    public function testParcel()
+    {
+        Order\Validator::parcel('string');
     }
 }

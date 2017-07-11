@@ -10,26 +10,28 @@ namespace Bliskapaczka\ApiClient\Mappers;
  */
 class Order
 {
-    private $senderEmail;
-    private $receiverEmail;
-    private $senderPhoneNumber;
-    private $receiverPhoneNumber;
-    private $senderPostCode;
-    private $senderFirstName;
-    private $senderLastName;
-    private $senderStreet;
-    private $senderBuildingNumber;
-    private $senderFlatNumber;
-    private $senderCity;
-    private $receiverFirstName;
-    private $receiverLastName;
-    private $operatorName;
-    private $destinationCode;
-    private $postingCode;
-    private $codValue;
-    private $insuranceValue;
-    private $additionalInformation;
-    private $parcel;
+    private $allowedProperties = [
+        'senderEmail',
+        'receiverEmail',
+        'senderPhoneNumber',
+        'receiverPhoneNumber',
+        'senderPostCode',
+        'senderFirstName',
+        'senderLastName',
+        'senderStreet',
+        'senderBuildingNumber',
+        'senderFlatNumber',
+        'senderCit',
+        'receiverFirstName',
+        'receiverLastName',
+        'operatorName',
+        'destinationCode',
+        'postingCode',
+        'codValue',
+        'insuranceValue',
+        'additionalInformation',
+        'parcel'
+    ];
 
     /**
      * Magic method implementation
@@ -38,7 +40,7 @@ class Order
      */
     public function __get($property)
     {
-        if (property_exists($this, $property)) {
+        if (in_array($property, $this->allowedProperties)) {
             return $this->$property;
         }
     }
@@ -51,7 +53,7 @@ class Order
      */
     public function __set($property, $value)
     {
-        if (property_exists($this, $property)) {
+        if (in_array($property, $this->allowedProperties)) {
               $this->$property = $value;
         }
 
@@ -79,9 +81,6 @@ class Order
      */
     public function validate()
     {
-        
-        $postCodePattern = '/^\d{2}\-\d{3}$/';
-
         /* Original Bliskapaczka validator regexps
         numer konta: /^\d{26}$/
         nip: /^\d{10}$/
@@ -102,27 +101,12 @@ class Order
 
 
         # Post code validation
-        if ($this->senderPhoneNumber) {
-            preg_match($postCodePattern, $this->senderPostCode, $senderPostCodeMatches);
-
-            if (!is_array($senderPostCodeMatches) || count($senderPostCodeMatches) == 0) {
-                throw new \Bliskapaczka\ApiClient\Exception('Invalid sender post code', 1);
-            }
+        if ($this->senderPostCode) {
+            Order\Validator::postCode($this->senderPostCode);
         }
 
         # Parcel validation
-        if (!is_array($this->parcel) || !array_key_exists('dimensions', $this->parcel)) {
-            throw new \Bliskapaczka\ApiClient\Exception('Invalid parcel', 1);
-        }
-
-        $dimensions = ['height', 'length', 'width', 'weight'];
-
-        # Parcel dimesnsions should be graten than 0
-        foreach ($dimensions as $dimension) {
-            if ($this->parcel['dimensions'][$dimension] <= 0) {
-                throw new \Bliskapaczka\ApiClient\Exception('Dimesnion must be greater than 0', 1);
-            }
-        }
+        Order\Validator::parcel($this->parcel);
 
         # Rest of string properties
         $properties = [
