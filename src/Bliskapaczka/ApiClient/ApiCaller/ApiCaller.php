@@ -3,6 +3,7 @@
 namespace Bliskapaczka\ApiClient\ApiCaller;
 
 use Bliskapaczka\ApiClient\Logger;
+use Bliskapaczka\ApiClient\Exception;
 
 /**
  * Class ApiCaller
@@ -14,8 +15,8 @@ class ApiCaller
 {
 
     /**
- * @var Logger
-*/
+     * @var Logger
+     */
     private $logger;
 
     /**
@@ -40,8 +41,12 @@ class ApiCaller
 
         curl_setopt_array($curl, $options);
 
-        $response = curl_exec($curl);
         $error = curl_error($curl);
+        if ($error) {
+            throw new Exception($error, 1);
+        }
+
+        $response = curl_exec($curl);
 
         return $response;
     }
