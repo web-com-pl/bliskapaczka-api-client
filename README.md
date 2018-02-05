@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/bliskapaczkapl/bliskapaczka-api-client.svg?branch=master)](https://travis-ci.org/bliskapaczkapl/bliskapaczka-api-client)
+
 # BliskaPaczka API Client
 
 This package is PHP API client for Bliskapaczka.pl API.
