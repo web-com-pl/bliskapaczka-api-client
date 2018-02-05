@@ -35,6 +35,7 @@ class CreateTest extends TestCase
             "receiverCity" => "Testowe",
             "operatorName" => "DPD",
             "additionalInformation" => "string",
+            "codValue" => 111.1,
             "parcel" => [
                 "dimensions" => [
                     "height" => 20,
@@ -66,6 +67,8 @@ class CreateTest extends TestCase
         $this->assertEquals($this->orderData['receiverFlatNumber'], $response->receiverFlatNumber);
         $this->assertEquals($this->orderData['receiverPostCode'], $response->receiverPostCode);
         $this->assertEquals($this->orderData['receiverCity'], $response->receiverCity);
+
+        $this->assertEquals($this->orderData['codValue'], $response->codValue);
 
         $this->assertTrue(isset($response->parcel));
         $this->assertTrue(isset($response->parcel->dimensions));
@@ -148,6 +151,7 @@ class CreateTest extends TestCase
       "receiverCity":"Testowe",
       "operatorName": "DPD",
       "insuranceValue": 0,
+      "codValue": "' . $this->orderData['codValue'] . '",
       "additionalInformation": "string",
       "parcel":{
         "dimensions": {

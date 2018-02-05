@@ -31,7 +31,7 @@ class CreateTest extends TestCase
             "operatorName" => "INPOST",
             "destinationCode" => "KRA010",
             "postingCode" => "KRA011",
-            "codValue" => 0,
+            "codValue" => 111.1,
             "insuranceValue" => 0,
             "additionalInformation" => "string",
             "parcel" => [
@@ -60,6 +60,8 @@ class CreateTest extends TestCase
         $this->assertEquals($this->orderData['senderPostCode'], $response->senderPostCode);
         $this->assertEquals($this->orderData['receiverPhoneNumber'], $response->receiverPhoneNumber);
         $this->assertEquals($this->orderData['receiverEmail'], $response->receiverEmail);
+
+        $this->assertEquals($this->orderData['codValue'], $response->codValue);
 
         $this->assertTrue(isset($response->parcel));
         $this->assertTrue(isset($response->parcel->dimensions));
@@ -138,7 +140,7 @@ class CreateTest extends TestCase
       "operatorName": "INPOST",
       "destinationCode": "KRA010",
       "postingCode": "KRA011",
-      "codValue": 0,
+      "codValue": "' . $this->orderData['codValue'] . '",
       "insuranceValue": 0,
       "additionalInformation": "string",
       "parcel":{

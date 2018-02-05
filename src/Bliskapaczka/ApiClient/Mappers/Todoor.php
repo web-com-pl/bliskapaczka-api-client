@@ -30,6 +30,7 @@ class Todoor
         'receiverPostCode',
         'receiverCity',
         'operatorName',
+        'codValue',
         'insuranceValue',
         'additionalInformation',
         'parcel'
