@@ -1,6 +1,6 @@
 <?php
 
-namespace Bliskapaczka;
+namespace Bliskapaczka\ApiClient\Bliskapaczka\Order;
 
 use PHPUnit\Framework\TestCase;
 
@@ -50,7 +50,7 @@ class CreateTest extends TestCase
 
     public function testCreateOrder()
     {
-        $apiClient = new ApiClient\Bliskapaczka\Order('test-test-test-test');
+        $apiClient = new \Bliskapaczka\ApiClient\Bliskapaczka\Order('test-test-test-test');
         $apiClient->setApiUrl($this->host);
 
         $response = json_decode($apiClient->create($this->orderData));
