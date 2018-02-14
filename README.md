@@ -4,6 +4,17 @@
 
 This package is PHP API client for Bliskapaczka.pl API.
 
+## Features
+
+Client has support for API actions:
+- order
+  - save
+  - get waybill
+- pricing
+  - get
+
+Full Bliskapaczka API documentation is [here](https://api-docs.bliskapaczka.pl)
+
 ## Usage
 
 ### Initialize client
