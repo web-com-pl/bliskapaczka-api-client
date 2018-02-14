@@ -2,8 +2,8 @@
 
 namespace Bliskapaczka\ApiClient\Bliskapaczka;
 
-use Bliskapaczka\ApiClient\Bliskapaczka;
-use Bliskapaczka\ApiClient\Mappers\Todoor as MappersTodoor;
+use Bliskapaczka\ApiClient\AbstractBliskapaczka;
+// use Bliskapaczka\ApiClient\Mappers\Todoor as MappersTodoor;
 
 /**
  * Bliskapaczka class
@@ -11,7 +11,7 @@ use Bliskapaczka\ApiClient\Mappers\Todoor as MappersTodoor;
  * @author  Mateusz Koszutowski (mkoszutowski@divante.pl)
  * @version 0.1.0
  */
-class Todoor extends Bliskapaczka
+class Todoor extends AbstractBliskapaczka
 {
     const REQUEST_URL = 'order/todoor';
 
@@ -22,8 +22,8 @@ class Todoor extends Bliskapaczka
      */
     public function create(array $data)
     {
-        $order = MappersTodoor::createFromArray($data);
-        $order->validate();
+        // $order = MappersTodoor::createFromArray($data);
+        // $order->validate();
 
         $response = $this->doCall($this->getUrl(), json_encode($data), array(), 'POST');
 

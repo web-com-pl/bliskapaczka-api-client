@@ -12,7 +12,7 @@ use Bliskapaczka\ApiClient\Mappers\Order;
  * @author  Mateusz Koszutowski (mkoszutowski@divante.pl)
  * @version 0.1.0
  */
-abstract class Bliskapaczka
+abstract class AbstractBliskapaczka
 {
     /**
      * @const Bliska paczka api version
@@ -115,6 +115,19 @@ abstract class Bliskapaczka
     public function getUrl()
     {
         return static::REQUEST_URL;
+    }
+
+    public function getValidator()
+    {
+        // Bliskapaczka\ApiClient\Bliskapaczka\Order
+        $className = get_class($this);
+        $validatorName = str_replace('\Bliskapaczka', '\Validator', $className);
+    
+        if (!class_exists($validatorName)) {
+
+        }
+
+        return new $validatorName;
     }
 
     /**

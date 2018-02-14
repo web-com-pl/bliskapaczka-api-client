@@ -73,4 +73,17 @@ class WaybillTest extends TestCase
 
         $apiClientOrder->get();
     }
+
+    public function testGetValidator()
+    {
+        $apiKey = '6061914b-47d3-42de-96bf-0004a57f1dba';
+        $apiUrl = 'http://localhost:1234';
+        $id = '000000001P-000000002';
+        
+        $apiClientOrder = new \Bliskapaczka\ApiClient\Bliskapaczka\Order\Waybill($apiKey);
+        $apiClientOrder->setApiUrl($apiUrl);
+        $apiClientOrder->setOrderId($id);
+
+        $this->assertTrue(is_a($apiClientOrder->getValidator(), 'Bliskapaczka\ApiClient\Validator\Order\Waybill'));
+    }
 }

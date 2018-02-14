@@ -2,7 +2,7 @@
 
 namespace Bliskapaczka\ApiClient\Bliskapaczka\Order;
 
-use Bliskapaczka\ApiClient\Bliskapaczka;
+use Bliskapaczka\ApiClient\AbstractBliskapaczka;
 use Bliskapaczka\ApiClient\Exception;
 
 /**
@@ -11,7 +11,7 @@ use Bliskapaczka\ApiClient\Exception;
  * @author  Mateusz Koszutowski (mkoszutowski@divante.pl)
  * @version 0.1.0
  */
-class Waybill extends Bliskapaczka
+class Waybill extends AbstractBliskapaczka
 {
     const REQUEST_URL = 'order/[[id]]/waybill';
 

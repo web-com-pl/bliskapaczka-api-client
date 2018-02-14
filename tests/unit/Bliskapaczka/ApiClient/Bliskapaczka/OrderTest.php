@@ -67,4 +67,15 @@ class OrderTest extends TestCase
 
         $apiClientOrder->create($this->orderData);
     }
+
+    public function testGetValidator()
+    {
+        $apiKey = '6061914b-47d3-42de-96bf-0004a57f1dba';
+        $apiUrl = 'http://localhost:1234';
+        
+        $apiClientOrder = new Order($apiKey);
+        $apiClientOrder->setApiUrl($apiUrl);
+
+        $this->assertTrue(is_a($apiClientOrder->getValidator(), 'Bliskapaczka\ApiClient\Validator\Order'));
+    }
 }

@@ -8,7 +8,7 @@ class BliskapaczkaTest extends TestCase
 {
     public function testClassExists()
     {
-        $this->assertTrue(class_exists('Bliskapaczka\ApiClient\Bliskapaczka'));
+        $this->assertTrue(class_exists('Bliskapaczka\ApiClient\AbstractBliskapaczka'));
         $this->assertTrue(class_exists('Bliskapaczka\ApiClient\Bliskapaczka\Order'));
     }
 

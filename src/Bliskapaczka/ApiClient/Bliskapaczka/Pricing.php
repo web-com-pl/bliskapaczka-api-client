@@ -2,7 +2,7 @@
 
 namespace Bliskapaczka\ApiClient\Bliskapaczka;
 
-use Bliskapaczka\ApiClient\Bliskapaczka;
+use Bliskapaczka\ApiClient\AbstractBliskapaczka;
 
 /**
  * Bliskapaczka class
@@ -10,7 +10,7 @@ use Bliskapaczka\ApiClient\Bliskapaczka;
  * @author  Mateusz Koszutowski (mkoszutowski@divante.pl)
  * @version 0.1.0
  */
-class Pricing extends Bliskapaczka
+class Pricing extends AbstractBliskapaczka
 {
     const REQUEST_URL = 'pricing';
 

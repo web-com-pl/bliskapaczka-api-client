@@ -1,8 +1,8 @@
 <?php
 
-namespace Bliskapaczka\ApiClient\Mappers\Todoor;
+namespace Bliskapaczka\ApiClient\Validator;
 
-use Bliskapaczka\ApiClient\Mappers\Todoor;
+use Bliskapaczka\ApiClient\Validator\Todoor;
 use PHPUnit\Framework\TestCase;
 
 class TodoorTest extends TestCase
@@ -49,7 +49,8 @@ class TodoorTest extends TestCase
 
     public function testCreateFromArray()
     {
-        $todoor = Todoor::createFromArray($this->todoorData);
+        $todoor = new Todoor();
+        $todoor->setData($this->todoorData);
         $todoor->validate();
 
         $this->assertEquals('Bliskapaczka\ApiClient\Mappers\Todoor', get_class($todoor));
@@ -63,7 +64,8 @@ class TodoorTest extends TestCase
     {
         $this->todoorData['receiverPhoneNumber'] = 'string';
 
-        $todoor = Todoor::createFromArray($this->todoorData);
+        $todoor = new Todoor();
+        $todoor->setData($this->todoorData);
         $todoor->validate();
     }
 
@@ -75,7 +77,8 @@ class TodoorTest extends TestCase
     {
         $this->todoorData['senderPostCode'] = 'string';
 
-        $todoor = Todoor::createFromArray($this->todoorData);
+        $todoor = new Todoor();
+        $todoor->setData($this->todoorData);
         $todoor->validate();
     }
 
@@ -87,7 +90,8 @@ class TodoorTest extends TestCase
     {
         $this->todoorData['parcel'] = 'string';
 
-        $todoor = Todoor::createFromArray($this->todoorData);
+        $todoor = new Todoor();
+        $todoor->setData($this->todoorData);
         $todoor->validate();
     }
 
@@ -99,7 +103,8 @@ class TodoorTest extends TestCase
     {
         $this->todoorData['receiverFirstName'] = '';
 
-        $todoor = Todoor::createFromArray($this->todoorData);
+        $todoor = new Todoor();
+        $todoor->setData($this->todoorData);
         $todoor->validate();
     }
 
@@ -111,7 +116,8 @@ class TodoorTest extends TestCase
     {
         $this->todoorData['receiverLastName'] = '';
 
-        $todoor = Todoor::createFromArray($this->todoorData);
+        $todoor = new Todoor();
+        $todoor->setData($this->todoorData);
         $todoor->validate();
     }
 
@@ -123,7 +129,8 @@ class TodoorTest extends TestCase
     {
         $this->todoorData['receiverStreet'] = '';
 
-        $todoor = Todoor::createFromArray($this->todoorData);
+        $todoor = new Todoor();
+        $todoor->setData($this->todoorData);
         $todoor->validate();
     }
 
@@ -135,7 +142,8 @@ class TodoorTest extends TestCase
     {
         $this->todoorData['receiverBuildingNumber'] = '';
 
-        $todoor = Todoor::createFromArray($this->todoorData);
+        $todoor = new Todoor();
+        $todoor->setData($this->todoorData);
         $todoor->validate();
     }
 
@@ -147,7 +155,8 @@ class TodoorTest extends TestCase
     {
         $this->todoorData['receiverFlatNumber'] = '';
 
-        $todoor = Todoor::createFromArray($this->todoorData);
+        $todoor = new Todoor();
+        $todoor->setData($this->todoorData);
         $todoor->validate();
     }
 
@@ -159,7 +168,8 @@ class TodoorTest extends TestCase
     {
         $this->todoorData['receiverPostCode'] = '';
 
-        $todoor = Todoor::createFromArray($this->todoorData);
+        $todoor = new Todoor();
+        $todoor->setData($this->todoorData);
         $todoor->validate();
     }
 
@@ -171,7 +181,8 @@ class TodoorTest extends TestCase
     {
         $this->todoorData['receiverCity'] = '';
 
-        $todoor = Todoor::createFromArray($this->todoorData);
+        $todoor = new Todoor();
+        $todoor->setData($this->todoorData);
         $todoor->validate();
     }
 
@@ -183,7 +194,8 @@ class TodoorTest extends TestCase
     {
         $this->todoorData['operatorName'] = '';
 
-        $todoor = Todoor::createFromArray($this->todoorData);
+        $todoor = new Todoor();
+        $todoor->setData($this->todoorData);
         $todoor->validate();
     }
 
@@ -195,12 +207,14 @@ class TodoorTest extends TestCase
     {
         $this->todoorData['parcel']['dimensions']['height'] = 0;
 
-        $todoor = Todoor::createFromArray($this->todoorData);
+        $todoor = new Todoor();
+        $todoor->setData($this->todoorData);
         $todoor->validate();
 
         $this->todoorData['parcel']['dimensions']['height'] = -1;
 
-        $todoor = Todoor::createFromArray($this->todoorData);
+        $todoor = new Todoor();
+        $todoor->setData($this->todoorData);
         $todoor->validate();
     }
 }

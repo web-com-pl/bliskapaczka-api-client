@@ -1,16 +1,22 @@
 <?php
 
-namespace Bliskapaczka\ApiClient\Mappers\Order;
+namespace Bliskapaczka\ApiClient;
 
+use Psr\Log\LoggerInterface;
 /**
- * Order Mapper class
+ * Bliskapaczka class
  *
  * @author  Mateusz Koszutowski (mkoszutowski@divante.pl)
  * @version 0.1.0
  */
-class Validator
+abstract class AbstractValidator
 {
-    const PHONE_NUMBER_PATTERN = '/^(5[0137]|6[069]|7[2389]|88)\d{7}$/';
+	const PHONE_NUMBER_PATTERN = '/^(5[0137]|6[069]|7[2389]|88)\d{7}$/';
+
+    public function setData(array $data)
+    {
+        $this->data = $data;
+    }
 
     /**
      * Validate email address
@@ -56,26 +62,5 @@ class Validator
         }
 
         return true;
-    }
-
-    /**
-     * Validate parcel
-     *
-     * @param array $data
-     */
-    public static function parcel($data)
-    {
-        if (!is_array($data) || !array_key_exists('dimensions', $data)) {
-            throw new \Bliskapaczka\ApiClient\Exception('Invalid parcel', 1);
-        }
-
-        $dimensions = ['height', 'length', 'width', 'weight'];
-
-        # Parcel dimesnsions should be graten than 0
-        foreach ($dimensions as $dimension) {
-            if ($data['dimensions'][$dimension] <= 0) {
-                throw new \Bliskapaczka\ApiClient\Exception('Dimesnion must be greater than 0', 1);
-            }
-        }
     }
 }

@@ -2,8 +2,9 @@
 
 namespace Bliskapaczka\ApiClient\Bliskapaczka;
 
-use Bliskapaczka\ApiClient\Bliskapaczka;
-use Bliskapaczka\ApiClient\Mappers\Order as MappersOrder;
+use Bliskapaczka\ApiClient\BliskapaczkaInterface;
+use Bliskapaczka\ApiClient\AbstractBliskapaczka;
+// use Bliskapaczka\ApiClient\Mappers\Order as MappersOrder;
 
 /**
  * Bliskapaczka class
@@ -11,7 +12,7 @@ use Bliskapaczka\ApiClient\Mappers\Order as MappersOrder;
  * @author  Mateusz Koszutowski (mkoszutowski@divante.pl)
  * @version 0.1.0
  */
-class Order extends Bliskapaczka
+class Order extends AbstractBliskapaczka implements BliskapaczkaInterface
 {
     const REQUEST_URL = 'order';
 
@@ -22,11 +23,15 @@ class Order extends Bliskapaczka
      */
     public function create(array $data)
     {
-        $order = MappersOrder::createFromArray($data);
-        $order->validate();
+        $this->validate($data);
 
         $response = $this->doCall($this->getUrl(), json_encode($data), array(), 'POST');
 
         return $response;
+    }
+
+    public function validate(array $data)
+    {
+
     }
 }
