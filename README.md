@@ -13,7 +13,7 @@ Client has support for API actions:
 - pricing
   - get
 
-Full Bliskapaczka API documentation is [here](https://api-docs.bliskapaczka.pl)
+For more information pleas see [Bliskapaczka API documentation](https://api-docs.bliskapaczka.pl)
 
 ## Usage
 
