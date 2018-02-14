@@ -14,24 +14,24 @@ use Bliskapaczka\ApiClient\Exception;
  */
 class Todoor extends AbstractValidator implements ValidatorInterface
 {
-    private $properties = [
+    protected $properties = [
         'senderEmail' => ['maxlength' => 60, 'notblank' => true],
         'receiverEmail' => ['maxlength' => 60],
-        'senderPhoneNumber',
-        'receiverPhoneNumber',
-        'senderPostCode',
-        'senderFirstName' => ['maxlength' => 30, 'notblank' => true],
+        'senderPhoneNumber' => ['notblank' => true],
+        'receiverPhoneNumber' => ['notblank' => true],
+        'senderPostCode' => ['notblank' => true],
         'senderLastName' => ['maxlength' => 30, 'notblank' => true],
         'senderStreet' => ['maxlength' => 30, 'notblank' => true],
         'senderBuildingNumber' => ['maxlength' => 10, 'notblank' => true],
         'senderFlatNumber' => ['maxlength' => 10],
+        'senderFirstName' => ['maxlength' => 30, 'notblank' => true],
         'senderCity' => ['maxlength' => 30, 'notblank' => true],
         'receiverFirstName' => ['maxlength' => 30, 'notblank' => true],
         'receiverLastName' => ['maxlength' => 30, 'notblank' => true],
         'receiverStreet' => ['maxlength' => 30, 'notblank' => true],
         'receiverBuildingNumber' => ['maxlength' => 10, 'notblank' => true],
         'receiverFlatNumber' => ['maxlength' => 10],
-        'receiverPostCode',
+        'receiverPostCode' => ['notblank' => true],
         'receiverCity' => ['maxlength' => 30, 'notblank' => true],
         'operatorName' => ['notblank' => true],
         'postingCode',
@@ -96,70 +96,10 @@ class Todoor extends AbstractValidator implements ValidatorInterface
         private OperatorName operatorName;
         */
 
-        # Rest of required string properties
-        foreach ($this->properties as $property => $settings) {
-            if (
-                isset($settings['notblank'])
-                && isset($settings['notblank']) === true
-                && (is_null($this->data[$property]) || strlen($this->data[$property]) == 0)
-            ) {
-                throw new Exception('Invalid ' . $property, 1);
-            }
-            
-            if (
-                isset($settings['maxlength'])
-                && $settings['maxlength'] > 0
-                && strlen($this->data[$property]) > $settings['maxlength']
-            ) {
-                throw new Exception('Invalid ' . $property, 1); 
-            }
-        }
+        # Basic validation for all propoerties
+        $this->basicValidation();
 
-        # Firstname Validation
-        if ($this->data['senderFirstName']) {
-            
-        }
-
-        # Email validation
-        if ($this->data['senderEmail']) {
-            self::email($this->data['senderEmail']);
-        }
-        self::email($this->data['receiverEmail']);
-
-        # Phone number validation
-        if ($this->data['senderPhoneNumber']) {
-            self::phone($this->data['senderPhoneNumber']);
-        }
-        self::phone($this->data['receiverPhoneNumber']);
-
-        # Post code validation
-        if ($this->data['senderPostCode']) {
-            self::postCode($this->data['senderPostCode']);
-        }
-        self::postCode($this->data['receiverPostCode']);
-
-        # Parcel validation
-        self::parcel($this->data['parcel']);
-    }
-
-    /**
-     * Validate parcel
-     *
-     * @param array $data
-     */
-    public static function parcel($data)
-    {
-        if (!is_array($data) || !array_key_exists('dimensions', $data)) {
-            throw new \Bliskapaczka\ApiClient\Exception('Invalid parcel', 1);
-        }
-
-        $dimensions = ['height', 'length', 'width', 'weight'];
-
-        # Parcel dimesnsions should be graten than 0
-        foreach ($dimensions as $dimension) {
-            if ($data['dimensions'][$dimension] <= 0) {
-                throw new \Bliskapaczka\ApiClient\Exception('Dimesnion must be greater than 0', 1);
-            }
-        }
+        # Order specific validation
+        $this->orderValidation();
     }
 }

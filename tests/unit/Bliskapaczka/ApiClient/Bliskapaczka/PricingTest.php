@@ -45,15 +45,4 @@ class PricingTest extends TestCase
 
         $apiClientPricing->get($this->pricingData);
     }
-
-    public function testGetValidator()
-    {
-        $apiKey = '6061914b-47d3-42de-96bf-0004a57f1dba';
-        $apiUrl = 'http://localhost:1234';
-        
-        $apiClientPricing = new Pricing($apiKey);
-        $apiClientPricing->setApiUrl($apiUrl);
-
-        $this->assertTrue(is_a($apiClientPricing->getValidator(), 'Bliskapaczka\ApiClient\Validator\Pricing'));
-    }
 }

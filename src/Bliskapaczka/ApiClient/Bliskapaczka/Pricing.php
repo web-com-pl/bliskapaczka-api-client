@@ -2,6 +2,7 @@
 
 namespace Bliskapaczka\ApiClient\Bliskapaczka;
 
+use Bliskapaczka\ApiClient\BliskapaczkaInterface;
 use Bliskapaczka\ApiClient\AbstractBliskapaczka;
 
 /**
@@ -10,7 +11,7 @@ use Bliskapaczka\ApiClient\AbstractBliskapaczka;
  * @author  Mateusz Koszutowski (mkoszutowski@divante.pl)
  * @version 0.1.0
  */
-class Pricing extends AbstractBliskapaczka
+class Pricing extends AbstractBliskapaczka implements BliskapaczkaInterface
 {
     const REQUEST_URL = 'pricing';
 
@@ -24,5 +25,16 @@ class Pricing extends AbstractBliskapaczka
         $response = $this->doCall($this->getUrl(), json_encode($data), array(), 'POST');
 
         return $response;
+    }
+
+    /**
+     * Validate data
+     *
+     * @param array $data
+     * @return true
+     */
+    public function validate(array $data)
+    {
+        return true;
     }
 }

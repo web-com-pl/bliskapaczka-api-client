@@ -44,16 +44,13 @@ class TodoorTest extends TestCase
 
     public function testClassExists()
     {
-        $this->assertTrue(class_exists('Bliskapaczka\ApiClient\Mappers\Todoor'));
+        $this->assertTrue(class_exists('Bliskapaczka\ApiClient\Validator\Todoor'));
     }
 
-    public function testCreateFromArray()
+    public function testClassImplementInterface()
     {
-        $todoor = new Todoor();
-        $todoor->setData($this->todoorData);
-        $todoor->validate();
-
-        $this->assertEquals('Bliskapaczka\ApiClient\Mappers\Todoor', get_class($todoor));
+        $order = new Todoor();
+        $this->assertTrue(is_a($order, 'Bliskapaczka\ApiClient\ValidatorInterface'));
     }
 
     /**
@@ -141,19 +138,6 @@ class TodoorTest extends TestCase
     public function testReceiverBuildingNumberValidation()
     {
         $this->todoorData['receiverBuildingNumber'] = '';
-
-        $todoor = new Todoor();
-        $todoor->setData($this->todoorData);
-        $todoor->validate();
-    }
-
-    /**
-     * @expectedException Bliskapaczka\ApiClient\Exception
-     * @expectedExceptionMessageRegExp /Invalid \w+/
-     */
-    public function testReceiverFlatNumberValidation()
-    {
-        $this->todoorData['receiverFlatNumber'] = '';
 
         $todoor = new Todoor();
         $todoor->setData($this->todoorData);

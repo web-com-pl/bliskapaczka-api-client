@@ -33,4 +33,18 @@ class BliskapaczkaTest extends TestCase
 
         $this->assertEquals($apiUrl, $apiClient->getApiUrl());
     }
+
+    /**
+     * @expectedException Bliskapaczka\ApiClient\Exception
+     * @expectedExceptionMessage Validator not exists
+     */
+    public function testNotExistingValidator()
+    {
+        $apiKey = '6061914b-47d3-42de-96bf-0004a57f1dba';
+        $apiUrl = 'http://localhost:1234';
+        $apiClient = new \Bliskapaczka\ApiClient\Bliskapaczka\Pricing($apiKey);
+        $apiClient->setApiUrl($apiUrl);
+
+        $apiClient->getValidator();
+    }
 }

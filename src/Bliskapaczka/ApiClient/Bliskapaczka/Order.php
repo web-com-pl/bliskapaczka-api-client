@@ -4,7 +4,6 @@ namespace Bliskapaczka\ApiClient\Bliskapaczka;
 
 use Bliskapaczka\ApiClient\BliskapaczkaInterface;
 use Bliskapaczka\ApiClient\AbstractBliskapaczka;
-// use Bliskapaczka\ApiClient\Mappers\Order as MappersOrder;
 
 /**
  * Bliskapaczka class
@@ -30,8 +29,16 @@ class Order extends AbstractBliskapaczka implements BliskapaczkaInterface
         return $response;
     }
 
+    /**
+     * Validate data
+     *
+     * @param array $data
+     * @return bool
+     */
     public function validate(array $data)
     {
-
+        $validator = $this->getValidator();
+        $validator->setData($data);
+        $validator->validate();
     }
 }

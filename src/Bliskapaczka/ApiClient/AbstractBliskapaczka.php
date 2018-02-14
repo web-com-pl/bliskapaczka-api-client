@@ -5,6 +5,7 @@ namespace Bliskapaczka\ApiClient;
 use Psr\Log\LoggerInterface;
 use Bliskapaczka\ApiClient\ApiCaller\ApiCaller;
 use Bliskapaczka\ApiClient\Mappers\Order;
+use Bliskapaczka\ApiClient\Exception;
 
 /**
  * Bliskapaczka class
@@ -117,6 +118,11 @@ abstract class AbstractBliskapaczka
         return static::REQUEST_URL;
     }
 
+    /**
+     * Get validator object for this instance
+     *
+     * @return ValidatorInterface
+     */
     public function getValidator()
     {
         // Bliskapaczka\ApiClient\Bliskapaczka\Order
@@ -124,7 +130,7 @@ abstract class AbstractBliskapaczka
         $validatorName = str_replace('\Bliskapaczka', '\Validator', $className);
     
         if (!class_exists($validatorName)) {
-
+            throw new Exception('Validator not exists', 1);
         }
 
         return new $validatorName;

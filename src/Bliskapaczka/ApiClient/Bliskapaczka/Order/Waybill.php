@@ -2,6 +2,7 @@
 
 namespace Bliskapaczka\ApiClient\Bliskapaczka\Order;
 
+use Bliskapaczka\ApiClient\BliskapaczkaInterface;
 use Bliskapaczka\ApiClient\AbstractBliskapaczka;
 use Bliskapaczka\ApiClient\Exception;
 
@@ -11,7 +12,7 @@ use Bliskapaczka\ApiClient\Exception;
  * @author  Mateusz Koszutowski (mkoszutowski@divante.pl)
  * @version 0.1.0
  */
-class Waybill extends AbstractBliskapaczka
+class Waybill extends AbstractBliskapaczka implements BliskapaczkaInterface
 {
     const REQUEST_URL = 'order/[[id]]/waybill';
 
@@ -51,5 +52,16 @@ class Waybill extends AbstractBliskapaczka
         $response = $this->doCall($this->getUrl(), json_encode(''), array(), 'GET');
 
         return $response;
+    }
+
+    /**
+     * Validate data
+     *
+     * @param array $data
+     * @return true
+     */
+    public function validate(array $data)
+    {
+        return true;
     }
 }
