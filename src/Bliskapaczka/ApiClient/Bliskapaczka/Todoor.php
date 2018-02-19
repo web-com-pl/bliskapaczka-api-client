@@ -4,7 +4,6 @@ namespace Bliskapaczka\ApiClient\Bliskapaczka;
 
 use Bliskapaczka\ApiClient\BliskapaczkaInterface;
 use Bliskapaczka\ApiClient\AbstractBliskapaczka;
-use Bliskapaczka\ApiClient\Exception;
 
 /**
  * Bliskapaczka class
@@ -20,6 +19,7 @@ class Todoor extends AbstractBliskapaczka implements BliskapaczkaInterface
      * Call API method create todoor (courier)
      *
      * @param array $data
+     * @reteurn json $responce
      */
     public function create(array $data)
     {
