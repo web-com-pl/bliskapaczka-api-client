@@ -4,6 +4,7 @@ namespace Bliskapaczka\ApiClient\Bliskapaczka;
 
 use Bliskapaczka\ApiClient\BliskapaczkaInterface;
 use Bliskapaczka\ApiClient\AbstractBliskapaczka;
+use Bliskapaczka\ApiClient\Exception;
 
 /**
  * Bliskapaczka class
