@@ -54,17 +54,6 @@ var_dump($apiClient->get($pricingData));
 $apiClient = new Bliskapaczka\ApiClient\Bliskapaczka\Report($apiKey, 'test');
 $apiClient->setOperator('ruch');
 
-$pricingData = [
-    // "parcel" => [
-    //     "dimensions" => [
-    //         "height" => 20,
-    //         "length" => 20,
-    //         "width" => 20,
-    //         "weight" => 2
-    //     ]
-    // ]
-];
-
-file_put_contents('zupa.pdf', $apiClient->get($pricingData));
+file_put_contents('zupa.pdf', $apiClient->get());
 
 var_dump($apiClient->get($pricingData));
