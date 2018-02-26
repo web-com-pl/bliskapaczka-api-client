@@ -95,10 +95,7 @@ class Order extends AbstractValidator implements ValidatorInterface
         */
 
         # Basic validation for all propoerties
-        $this->basicValidation();
-
-        # Order specific validation
-        $this->orderValidation();
+        $this->validationByProperty();
 
         return true;
     }
