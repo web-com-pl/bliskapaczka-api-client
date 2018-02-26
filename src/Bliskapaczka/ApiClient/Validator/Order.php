@@ -30,15 +30,17 @@ class Order extends AbstractValidator implements ValidatorInterface
         'receiverLastName' => ['maxlength' => 30, 'notblank' => true],
         'operatorName' => ['notblank' => true],
         'destinationCode' => ['notblank' => true],
-        'postingCode',
-        'codValue',
-        'insuranceValue',
-        'additionalInformation',
-        'parcel'
+        'postingCode' => [],
+        'codValue' => [],
+        'insuranceValue' => [],
+        'additionalInformation' => [],
+        'parcel' => []
     ];
 
     /**
      * Validate data
+     *
+     * @return bool
      */
     public function validate()
     {
@@ -97,5 +99,7 @@ class Order extends AbstractValidator implements ValidatorInterface
 
         # Order specific validation
         $this->orderValidation();
+
+        return true;
     }
 }

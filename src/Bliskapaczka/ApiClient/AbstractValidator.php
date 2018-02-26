@@ -53,30 +53,39 @@ abstract class AbstractValidator
     public function orderValidation()
     {
         # Email validation
-        if ($this->data['senderEmail']) {
+        if (isset($this->properties['senderEmail']) && $this->data['senderEmail']) {
             self::email($this->data['senderEmail']);
         }
-        if ($this->data['receiverEmail']) {
+        if (isset($this->properties['receiverEmail'])
+            && isset($this->data['receiverEmail'])
+            && $this->data['receiverEmail']) {
             self::email($this->data['receiverEmail']);
         }
 
         # Phone number validation
-        if ($this->data['senderPhoneNumber']) {
+        if (isset($this->properties['senderPhoneNumber']) && $this->data['senderPhoneNumber']) {
             self::phone($this->data['senderPhoneNumber']);
         }
-        if ($this->data['receiverPhoneNumber']) {
+        if (isset($this->properties['receiverPhoneNumber'])
+            && isset($this->data['receiverPhoneNumber'])
+            && $this->data['receiverPhoneNumber']) {
             self::phone($this->data['receiverPhoneNumber']);
         }
 
         # Post code validation
-        if ($this->data['senderPostCode']) {
+        if (isset($this->properties['senderPostCode']) && $this->data['senderPostCode']) {
             self::postCode($this->data['senderPostCode']);
         }
-        if (isset($this->data['receiverPostCode']) && $this->data['receiverPostCode']) {
+        if (isset($this->properties['receiverPostCode'])
+            && isset($this->data['receiverPostCode'])
+            && $this->data['receiverPostCode']) {
             self::postCode($this->data['receiverPostCode']);
         }
+
         # Parcel validation
-        self::parcel($this->data['parcel']);
+        if (isset($this->properties['parcel']) && isset($this->data['parcel'])) {
+            self::parcel($this->data['parcel']);
+        }
     }
 
     /**

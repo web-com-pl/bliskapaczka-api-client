@@ -34,11 +34,11 @@ class Todoor extends AbstractValidator implements ValidatorInterface
         'receiverPostCode' => ['notblank' => true],
         'receiverCity' => ['maxlength' => 30, 'notblank' => true],
         'operatorName' => ['notblank' => true],
-        'postingCode',
-        'codValue',
-        'insuranceValue',
-        'additionalInformation',
-        'parcel'
+        'postingCode' => [],
+        'codValue' => [],
+        'insuranceValue' => [],
+        'additionalInformation' => [],
+        'parcel' => []
     ];
 
     /**
