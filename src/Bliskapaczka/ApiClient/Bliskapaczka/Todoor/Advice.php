@@ -14,7 +14,7 @@ use Bliskapaczka\ApiClient\AbstractBliskapaczka;
  */
 class Advice extends Todoor implements BliskapaczkaInterface
 {
-    const REQUEST_URL = 'order/todoor/advice';
+    const REQUEST_URL = 'order/advice/todoor';
 
     /**
      * Return end of url for request
