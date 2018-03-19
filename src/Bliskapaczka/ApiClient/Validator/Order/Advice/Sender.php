@@ -26,20 +26,4 @@ class Sender extends Advice implements ValidatorInterface
         'senderFlatNumber' => ['maxlength' => 10],
         'senderCity' => ['maxlength' => 30, 'notblank' => true],
     ];
-
-    /**
-     * Basic validation for data
-     */
-    protected function validationByProperty()
-    {
-        foreach ($this->properties as $property => $settings) {
-            if (!isset($this->data[$property])) {
-                throw new Exception($property . " is required", 1);
-            }
-
-            $this->notBlank($property, $settings);
-            $this->maxLength($property, $settings);
-            $this->specificValidation($property);
-        }
-    }
 }
