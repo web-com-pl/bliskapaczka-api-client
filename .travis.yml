@@ -9,12 +9,11 @@ services:
   - docker
 
 before_install:
+  - sudo apt update && sudo apt install -y gnutls-bin
   - docker pull madkom/pact-mock-service
   - docker run -p 1234:1234 -v /tmp/log:/var/log/pacto -v /tmp/contracts:/opt/contracts madkom/pact-mock-service &
 
-before_script:
-  - apt update && apt install -y gnutls-cli 
-  - composer install
+before_script: composer install
 script:
   - vendor/bin/security-checker security:check ./composer.lock
   - vendor/bin/phpcs -s --colors --standard=PSR2 src/ tests/
