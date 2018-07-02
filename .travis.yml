@@ -9,7 +9,6 @@ services:
   - docker
 
 before_install:
-  - sudo apt update && sudo apt install -y gnutls-bin
   - docker pull madkom/pact-mock-service
   - docker run -p 1234:1234 -v /tmp/log:/var/log/pacto -v /tmp/contracts:/opt/contracts madkom/pact-mock-service &
 
