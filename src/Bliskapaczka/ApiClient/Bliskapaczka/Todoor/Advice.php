@@ -33,7 +33,7 @@ class Advice extends Todoor implements BliskapaczkaInterface
     public function create(array $data)
     {
         if (isset($this->orderId)) {
-            $data['message'] = $this->orderId;
+            $data['number'] = $this->orderId;
         }
 
         return parent::create($data);
