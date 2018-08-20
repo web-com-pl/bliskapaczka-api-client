@@ -48,8 +48,7 @@ abstract class AbstractBliskapaczka
     /**
      * Create Bliskapaczka instance
      *
-     * @param string $bearer
-     * @param string $mode
+     * @param string $config
      */
     public function __construct($config = null)
     {

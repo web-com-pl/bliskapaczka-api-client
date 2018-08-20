@@ -94,7 +94,8 @@ class OrderTest extends TestCase
     }
 
     public function testGetValidator()
-    {;
+    {
+        ;
         $apiUrl = 'http://localhost:1234';
         
         $apiClientOrder = new Order($this->configMock);

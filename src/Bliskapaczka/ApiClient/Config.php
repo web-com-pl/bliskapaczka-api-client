@@ -13,7 +13,7 @@ class Config
 
     protected $mode = 'prod';
 
-	/**
+    /**
      * Call this method to get singleton
      */
     public static function get()
@@ -28,22 +28,30 @@ class Config
     /**
      * Make constructor private, so nobody can call "new Class".
      */
-    private function __construct() {}
+    private function __construct()
+    {
+    }
 
     /**
      * Make clone magic method private, so nobody can clone instance.
      */
-    private function __clone() {}
+    private function __clone()
+    {
+    }
 
     /**
      * Make sleep magic method private, so nobody can serialize instance.
      */
-    private function __sleep() {}
+    private function __sleep()
+    {
+    }
 
     /**
      * Make wakeup magic method private, so nobody can unserialize instance.
      */
-    private function __wakeup() {}
+    private function __wakeup()
+    {
+    }
 
     /**
      * Set bearer
