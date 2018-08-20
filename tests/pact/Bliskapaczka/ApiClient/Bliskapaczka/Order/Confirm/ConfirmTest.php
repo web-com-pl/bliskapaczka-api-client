@@ -2,6 +2,7 @@
 
 namespace  Bliskapaczka\ApiClient\Bliskapaczka\Order\Confirm;
 
+use Bliskapaczka\ApiClient\Config;
 use PHPUnit\Framework\TestCase;
 
 class ConfirmTest extends TestCase
@@ -18,11 +19,26 @@ class ConfirmTest extends TestCase
 
         $this->deleteInteractions();
         $this->setInteraction();
+
+        $apiKey = 'test-test-test-test';
+        $this->configMock = $this->getMockBuilder(Config::class)
+                                     ->disableOriginalConstructor()
+                                     ->disableOriginalClone()
+                                     ->disableArgumentCloning()
+                                     ->disallowMockingUnknownTypes()
+                                     ->setMethods(
+                                         array(
+                                             'getApiKey'
+                                         )
+                                     )
+                                     ->getMock();
+
+        $this->configMock->method('getApiKey')->will($this->returnValue($apiKey));
     }
 
     public function testConfirm()
     {
-        $apiClient = new \Bliskapaczka\ApiClient\Bliskapaczka\Order\Confirm('test-test-test-test');
+        $apiClient = new \Bliskapaczka\ApiClient\Bliskapaczka\Order\Confirm($this->configMock);
         $apiClient->setApiUrl($this->host);
         $apiClient->setOperator($this->operator);
 

@@ -2,6 +2,7 @@
 
 namespace Bliskapaczka\ApiClient\Bliskapaczka\Order\Pricing\Error;
 
+use Bliskapaczka\ApiClient\Config;
 use PHPUnit\Framework\TestCase;
 
 class FiveHundredTest extends TestCase
@@ -25,6 +26,21 @@ class FiveHundredTest extends TestCase
 
         $this->deleteInteractions();
         $this->setInteraction();
+
+        $apiKey = 'test-test-test-test';
+        $this->configMock = $this->getMockBuilder(Config::class)
+                                     ->disableOriginalConstructor()
+                                     ->disableOriginalClone()
+                                     ->disableArgumentCloning()
+                                     ->disallowMockingUnknownTypes()
+                                     ->setMethods(
+                                         array(
+                                             'getApiKey'
+                                         )
+                                     )
+                                     ->getMock();
+
+        $this->configMock->method('getApiKey')->will($this->returnValue($apiKey));
     }
 
     /**
@@ -33,7 +49,7 @@ class FiveHundredTest extends TestCase
      */
     public function testGetPricing()
     {
-        $apiClient = new \Bliskapaczka\ApiClient\Bliskapaczka\Pricing('test-test-test-test');
+        $apiClient = new \Bliskapaczka\ApiClient\Bliskapaczka\Pricing($this->configMock);
         $apiClient->setApiUrl($this->host);
 
         var_dump($apiClient->get($this->pricingData));

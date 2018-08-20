@@ -6,6 +6,24 @@ use PHPUnit\Framework\TestCase;
 
 class BliskapaczkaTest extends TestCase
 {
+    protected function setUp()
+    {
+        $apiKey = '6061914b-47d3-42de-96bf-0004a57f1dba';
+        $this->configMock = $this->getMockBuilder(ApiClient\Config::class)
+                                     ->disableOriginalConstructor()
+                                     ->disableOriginalClone()
+                                     ->disableArgumentCloning()
+                                     ->disallowMockingUnknownTypes()
+                                     ->setMethods(
+                                         array(
+                                             'getApiKey'
+                                         )
+                                     )
+                                     ->getMock();
+
+        $this->configMock->method('getApiKey')->will($this->returnValue($apiKey));
+    }
+
     public function testClassExists()
     {
         $this->assertTrue(class_exists('Bliskapaczka\ApiClient\AbstractBliskapaczka'));
@@ -14,8 +32,7 @@ class BliskapaczkaTest extends TestCase
 
     public function testGetApiUrlForMode()
     {
-        $apiKey = '6061914b-47d3-42de-96bf-0004a57f1dba';
-        $apiClient = new \Bliskapaczka\ApiClient\Bliskapaczka\Order($apiKey);
+        $apiClient = new \Bliskapaczka\ApiClient\Bliskapaczka\Order($this->configMock);
 
         $url = $apiClient->getApiUrlForMode('prod');
         $this->assertEquals('https://api.bliskapaczka.pl', $url);
@@ -26,9 +43,8 @@ class BliskapaczkaTest extends TestCase
 
     public function testSetApiUrl()
     {
-        $apiKey = '6061914b-47d3-42de-96bf-0004a57f1dba';
         $apiUrl = 'http://localhost:1234';
-        $apiClient = new \Bliskapaczka\ApiClient\Bliskapaczka\Order($apiKey);
+        $apiClient = new \Bliskapaczka\ApiClient\Bliskapaczka\Order($this->configMock);
         $apiClient->setApiUrl($apiUrl);
 
         $this->assertEquals($apiUrl, $apiClient->getApiUrl());
@@ -40,9 +56,8 @@ class BliskapaczkaTest extends TestCase
      */
     public function testNotExistingValidator()
     {
-        $apiKey = '6061914b-47d3-42de-96bf-0004a57f1dba';
         $apiUrl = 'http://localhost:1234';
-        $apiClient = new \Bliskapaczka\ApiClient\Bliskapaczka\Pricing($apiKey);
+        $apiClient = new \Bliskapaczka\ApiClient\Bliskapaczka\Pricing($this->configMock);
         $apiClient->setApiUrl($apiUrl);
 
         $apiClient->getValidator();
@@ -50,8 +65,7 @@ class BliskapaczkaTest extends TestCase
 
     public function testTimeout()
     {
-        $apiKey = '6061914b-47d3-42de-96bf-0004a57f1dba';
-        $apiClient = new \Bliskapaczka\ApiClient\Bliskapaczka\Order($apiKey);
+        $apiClient = new \Bliskapaczka\ApiClient\Bliskapaczka\Order($this->configMock);
 
         $this->assertEquals(2, $apiClient->getApiTimeout());
     }

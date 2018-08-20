@@ -2,6 +2,7 @@
 
 namespace Bliskapaczka\ApiClient\Bliskapaczka;
 
+use Bliskapaczka\ApiClient\Config;
 use Bliskapaczka\ApiClient\Bliskapaczka\Pos;
 use PHPUnit\Framework\TestCase;
 
@@ -11,6 +12,21 @@ class PosTest extends TestCase
     {
         $this->operator = 'ruch';
         $this->pointCode = '112345';
+
+        $apiKey = '6061914b-47d3-42de-96bf-0004a57f1dba';
+        $this->configMock = $this->getMockBuilder(Config::class)
+                                     ->disableOriginalConstructor()
+                                     ->disableOriginalClone()
+                                     ->disableArgumentCloning()
+                                     ->disallowMockingUnknownTypes()
+                                     ->setMethods(
+                                         array(
+                                             'getApiKey'
+                                         )
+                                     )
+                                     ->getMock();
+
+        $this->configMock->method('getApiKey')->will($this->returnValue($apiKey));
     }
 
     public function testClassExists()
@@ -20,10 +36,9 @@ class PosTest extends TestCase
 
     public function testGetUrl()
     {
-        $apiKey = '6061914b-47d3-42de-96bf-0004a57f1dba';
         $apiUrl = 'http://localhost:1234';
         
-        $apiClientPos = new Pos($apiKey);
+        $apiClientPos = new Pos($this->configMock);
         $apiClientPos->setApiUrl($apiUrl);
         $apiClientPos->setOperator($this->operator);
         $apiClientPos->setPointCode($this->pointCode);
@@ -33,10 +48,9 @@ class PosTest extends TestCase
 
     public function testGet()
     {
-        $apiKey = '6061914b-47d3-42de-96bf-0004a57f1dba';
         $apiUrl = 'http://localhost:1234';
         
-        $apiClientPos = new Pos($apiKey);
+        $apiClientPos = new Pos($this->configMock);
         $apiClientPos->setApiUrl($apiUrl);
         $apiClientPos->setOperator($this->operator);
         $apiClientPos->setPointCode($this->pointCode);
@@ -50,10 +64,9 @@ class PosTest extends TestCase
      */
     public function testGetUrlForEmptyPointCode()
     {
-        $apiKey = '6061914b-47d3-42de-96bf-0004a57f1dba';
         $apiUrl = 'http://localhost:1234';
 
-        $apiClientPos = new Pos($apiKey);
+        $apiClientPos = new Pos($this->configMock);
         $apiClientPos->setOperator($this->operator);
 
         var_dump($apiClientPos->getUrl());
@@ -65,10 +78,9 @@ class PosTest extends TestCase
      */
     public function testGetUrlForEmptyOperator()
     {
-        $apiKey = '6061914b-47d3-42de-96bf-0004a57f1dba';
         $apiUrl = 'http://localhost:1234';
 
-        $apiClientPos = new Pos($apiKey);
+        $apiClientPos = new Pos($this->configMock);
         $apiClientPos->setPointCode($this->pointCode);
 
         var_dump($apiClientPos->getUrl());

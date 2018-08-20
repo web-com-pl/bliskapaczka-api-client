@@ -2,6 +2,7 @@
 
 namespace Bliskapaczka\ApiClient\Bliskapaczka\Pos;
 
+use Bliskapaczka\ApiClient\Config;
 use PHPUnit\Framework\TestCase;
 
 class GetTest extends TestCase
@@ -19,12 +20,27 @@ class GetTest extends TestCase
 
         $this->deleteInteractions();
         $this->setInteraction();
+
+        $apiKey = 'test-test-test-test';
+        $this->configMock = $this->getMockBuilder(Config::class)
+                                     ->disableOriginalConstructor()
+                                     ->disableOriginalClone()
+                                     ->disableArgumentCloning()
+                                     ->disallowMockingUnknownTypes()
+                                     ->setMethods(
+                                         array(
+                                             'getApiKey'
+                                         )
+                                     )
+                                     ->getMock();
+
+        $this->configMock->method('getApiKey')->will($this->returnValue($apiKey));
     }
 
     public function testGetPos()
     {
 
-        $apiClientPos = new \Bliskapaczka\ApiClient\Bliskapaczka\Pos('test-test-test-test');
+        $apiClientPos = new \Bliskapaczka\ApiClient\Bliskapaczka\Pos($this->configMock);
         $apiClientPos->setApiUrl($this->host . '/api');
         $apiClientPos->setOperator($this->operator);
         $apiClientPos->setPointCode($this->pointCode);

@@ -2,6 +2,7 @@
 
 namespace Bliskapaczka\ApiClient\Bliskapaczka\Order;
 
+use Bliskapaczka\ApiClient\Config;
 use Bliskapaczka\ApiClient\Bliskapaczka\Order\Cancel;
 use PHPUnit\Framework\TestCase;
 
@@ -9,6 +10,20 @@ class CancelTest extends TestCase
 {
     protected function setUp()
     {
+        $apiKey = '6061914b-47d3-42de-96bf-0004a57f1dba';
+        $this->configMock = $this->getMockBuilder(Config::class)
+                                     ->disableOriginalConstructor()
+                                     ->disableOriginalClone()
+                                     ->disableArgumentCloning()
+                                     ->disallowMockingUnknownTypes()
+                                     ->setMethods(
+                                         array(
+                                             'getApiKey'
+                                         )
+                                     )
+                                     ->getMock();
+
+        $this->configMock->method('getApiKey')->will($this->returnValue($apiKey));
     }
 
     public function testClassExists()
@@ -18,11 +33,10 @@ class CancelTest extends TestCase
 
     public function testGetUrl()
     {
-        $apiKey = '6061914b-47d3-42de-96bf-0004a57f1dba';
         $apiUrl = 'http://localhost:1234';
         $id = '000000001P-000000002';
         
-        $apiClientOrder = new Cancel($apiKey);
+        $apiClientOrder = new Cancel($this->configMock);
         $apiClientOrder->setApiUrl($apiUrl);
         $apiClientOrder->setOrderId($id);
 
@@ -31,11 +45,10 @@ class CancelTest extends TestCase
 
     public function testGet()
     {
-        $apiKey = '6061914b-47d3-42de-96bf-0004a57f1dba';
         $apiUrl = 'http://localhost:1234';
         $id = '000000001P-000000002';
         
-        $apiClientOrder = new Cancel($apiKey);
+        $apiClientOrder = new Cancel($this->configMock);
         $apiClientOrder->setApiUrl($apiUrl);
         $apiClientOrder->setOrderId($id);
 

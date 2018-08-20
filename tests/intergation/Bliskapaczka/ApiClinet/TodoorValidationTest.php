@@ -2,6 +2,7 @@
 
 namespace Bliskapaczka\ApiClient\Bliskapaczka;
 
+use Bliskapaczka\ApiClient\Config;
 use Bliskapaczka\ApiClient\ValidatorInterface;
 use Bliskapaczka\ApiClient\Bliskapaczka\Todoor;
 use PHPUnit\Framework\TestCase;
@@ -41,6 +42,21 @@ class TodoorValidationTest extends TestCase
                 ]
             ]
         ];
+
+        $apiKey = '6061914b-47d3-42de-96bf-0004a57f1dba';
+        $this->configMock = $this->getMockBuilder(Config::class)
+                                     ->disableOriginalConstructor()
+                                     ->disableOriginalClone()
+                                     ->disableArgumentCloning()
+                                     ->disallowMockingUnknownTypes()
+                                     ->setMethods(
+                                         array(
+                                             'getApiKey'
+                                         )
+                                     )
+                                     ->getMock();
+
+        $this->configMock->method('getApiKey')->will($this->returnValue($apiKey));
     }
 
     /**
@@ -51,10 +67,9 @@ class TodoorValidationTest extends TestCase
     {
         $this->todoorData['receiverPhoneNumber'] = 'string';
 
-        $apiKey = '6061914b-47d3-42de-96bf-0004a57f1dba';
         $apiUrl = 'http://localhost:1234';
         
-        $apiClientTodoor = new Todoor($apiKey);
+        $apiClientTodoor = new Todoor($this->configMock);
         $apiClientTodoor->setApiUrl($apiUrl);
 
         $apiClientTodoor->create($this->todoorData);

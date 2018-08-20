@@ -3,7 +3,12 @@
 require __DIR__ . '/vendor/autoload.php';
 
 $apiKey = '999eac37-ba4d-4a00-b64c-14749dc835fa';
-$apiClient = new Bliskapaczka\ApiClient\Bliskapaczka\Order($apiKey, 'test');
+
+$config = Bliskapaczka\ApiClient\Config::get();
+$config->setApiKey($apiKey);
+$config->setMode('test');
+
+$apiClient = new Bliskapaczka\ApiClient\Bliskapaczka\Order($config);
 
 $orderData = [
     "senderFirstName" => "string",
@@ -36,7 +41,7 @@ $orderData = [
 ];
 var_dump($apiClient->create($orderData));
 
-$apiClient = new Bliskapaczka\ApiClient\Bliskapaczka\Pricing($apiKey, 'test');
+$apiClient = new Bliskapaczka\ApiClient\Bliskapaczka\Pricing($config);
 
 $pricingData = [
     "parcel" => [
@@ -50,7 +55,7 @@ $pricingData = [
 ];
 var_dump($apiClient->get($pricingData));
 
-$apiClient = new Bliskapaczka\ApiClient\Bliskapaczka\Pricing\Todoor($apiKey, 'test');
+$apiClient = new Bliskapaczka\ApiClient\Bliskapaczka\Pricing\Todoor($config);
 
 $pricingData = [
     "parcel" => [
@@ -64,23 +69,23 @@ $pricingData = [
 ];
 var_dump($apiClient->get($pricingData));
 
-$apiClient = new Bliskapaczka\ApiClient\Bliskapaczka\Pos($apiKey, 'test');
+$apiClient = new Bliskapaczka\ApiClient\Bliskapaczka\Pos($config);
 $apiClient->setOperator('INPOST');
 $apiClient->setPointCode('GRU340');
 
 var_dump($apiClient->get());
 
-$apiClient = new Bliskapaczka\ApiClient\Bliskapaczka\Order\Waybill($apiKey, 'test');
+$apiClient = new Bliskapaczka\ApiClient\Bliskapaczka\Order\Waybill($config);
 $apiClient->setOrderId('000000636P-000000108');
 
 var_dump($apiClient->get());
 
-$apiClient = new Bliskapaczka\ApiClient\Bliskapaczka\Report($apiKey, 'test');
+$apiClient = new Bliskapaczka\ApiClient\Bliskapaczka\Report($config);
 $apiClient->setOperator('ruch');
 
 file_put_contents('zupa.pdf', $apiClient->get());
 
-$apiClient = new Bliskapaczka\ApiClient\Bliskapaczka\Order\Confirm($apiKey, 'test');
+$apiClient = new Bliskapaczka\ApiClient\Bliskapaczka\Order\Confirm($config);
 $apiClient->setOperator('POCZTA');
 
 var_dump($apiClient->confirm());

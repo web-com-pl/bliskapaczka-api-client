@@ -2,6 +2,7 @@
 
 namespace  Bliskapaczka\ApiClient\Bliskapaczka;
 
+use Bliskapaczka\ApiClient\Config;
 use PHPUnit\Framework\TestCase;
 
 class GetTest extends TestCase
@@ -19,13 +20,28 @@ class GetTest extends TestCase
 
         $this->deleteInteractions();
         $this->setInteraction();
+
+        $apiKey = 'test-test-test-test';
+        $this->configMock = $this->getMockBuilder(Config::class)
+                                     ->disableOriginalConstructor()
+                                     ->disableOriginalClone()
+                                     ->disableArgumentCloning()
+                                     ->disallowMockingUnknownTypes()
+                                     ->setMethods(
+                                         array(
+                                             'getApiKey'
+                                         )
+                                     )
+                                     ->getMock();
+
+        $this->configMock->method('getApiKey')->will($this->returnValue($apiKey));
     }
 
     public function testGetReport()
     {
         $testFile = '/tmp/test.pdf';
 
-        $apiClient = new Report('test-test-test-test');
+        $apiClient = new Report($this->configMock);
         $apiClient->setApiUrl($this->host);
         $apiClient->setOperator($this->operator);
 

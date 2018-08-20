@@ -2,11 +2,30 @@
 
 namespace Bliskapaczka\ApiClient\Bliskapaczka;
 
+use Bliskapaczka\ApiClient\Config;
 use Bliskapaczka\ApiClient\Bliskapaczka\Report;
 use PHPUnit\Framework\TestCase;
 
 class ReportTest extends TestCase
 {
+    protected function setUp()
+    {
+        $apiKey = '6061914b-47d3-42de-96bf-0004a57f1dba';
+        $this->configMock = $this->getMockBuilder(Config::class)
+                                     ->disableOriginalConstructor()
+                                     ->disableOriginalClone()
+                                     ->disableArgumentCloning()
+                                     ->disallowMockingUnknownTypes()
+                                     ->setMethods(
+                                         array(
+                                             'getApiKey'
+                                         )
+                                     )
+                                     ->getMock();
+
+        $this->configMock->method('getApiKey')->will($this->returnValue($apiKey));
+    }
+
     public function testClassExists()
     {
         $this->assertTrue(class_exists('Bliskapaczka\ApiClient\Bliskapaczka\Report'));
@@ -18,11 +37,10 @@ class ReportTest extends TestCase
      */
     public function testGetForEmptyOperatorAndNumbers()
     {
-        $apiKey = '6061914b-47d3-42de-96bf-0004a57f1dba';
         $apiUrl = 'http://localhost:1234';
         $id = '';
 
-        $apiClientReport = new Report($apiKey);
+        $apiClientReport = new Report($this->configMock);
         $apiClientReport->setApiUrl($apiUrl);
 
         $apiClientReport->get();
@@ -30,11 +48,10 @@ class ReportTest extends TestCase
 
     public function testGetUrl()
     {
-        $apiKey = '6061914b-47d3-42de-96bf-0004a57f1dba';
         $apiUrl = 'http://localhost:1234';
         $operator = 'ruch';
         
-        $apiClientReport = new Report($apiKey);
+        $apiClientReport = new Report($this->configMock);
         $apiClientReport->setApiUrl($apiUrl);
         $apiClientReport->setOperator($operator);
 
@@ -43,12 +60,11 @@ class ReportTest extends TestCase
 
     public function testGetUrlWithStartPeriod()
     {
-        $apiKey = '6061914b-47d3-42de-96bf-0004a57f1dba';
         $apiUrl = 'http://localhost:1234';
         $operator = 'ruch';
         $date = '2017-10-23T12:00:00';
         
-        $apiClientReport = new Report($apiKey);
+        $apiClientReport = new Report($this->configMock);
         $apiClientReport->setApiUrl($apiUrl);
         $apiClientReport->setOperator($operator);
         $apiClientReport->setStartPeriod($date);
@@ -69,11 +85,10 @@ class ReportTest extends TestCase
 
     public function testGet()
     {
-        $apiKey = '6061914b-47d3-42de-96bf-0004a57f1dba';
         $apiUrl = 'http://localhost:1234';
         $operator = 'ruch';
         
-        $apiClientReport = new Report($apiKey);
+        $apiClientReport = new Report($this->configMock);
         $apiClientReport->setApiUrl($apiUrl);
         $apiClientReport->setOperator($operator);
 
@@ -82,11 +97,10 @@ class ReportTest extends TestCase
 
     public function testGetUrlWithNumbers()
     {
-        $apiKey = '6061914b-47d3-42de-96bf-0004a57f1dba';
         $apiUrl = 'http://localhost:1234';
         $numbers = '000000001P-0000000001,000000001P-0000000002';
 
-        $apiClientReport = new Report($apiKey);
+        $apiClientReport = new Report($this->configMock);
         $apiClientReport->setApiUrl($apiUrl);
         $apiClientReport->setNumbers($numbers);
 
@@ -98,11 +112,10 @@ class ReportTest extends TestCase
 
     public function testGetNumbers()
     {
-        $apiKey = '6061914b-47d3-42de-96bf-0004a57f1dba';
         $apiUrl = 'http://localhost:1234';
         $numbers = '000000001P-0000000001,000000001P-0000000002';
 
-        $apiClientReport = new Report($apiKey);
+        $apiClientReport = new Report($this->configMock);
         $apiClientReport->setApiUrl($apiUrl);
         $apiClientReport->setNumbers($numbers);
 
@@ -111,8 +124,7 @@ class ReportTest extends TestCase
 
     public function testTimeout()
     {
-        $apiKey = '6061914b-47d3-42de-96bf-0004a57f1dba';
-        $apiClient = new \Bliskapaczka\ApiClient\Bliskapaczka\Report($apiKey);
+        $apiClient = new \Bliskapaczka\ApiClient\Bliskapaczka\Report($this->configMock);
 
         $this->assertEquals(10, $apiClient->getApiTimeout());
     }

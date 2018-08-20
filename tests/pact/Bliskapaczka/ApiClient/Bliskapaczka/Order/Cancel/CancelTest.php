@@ -2,6 +2,7 @@
 
 namespace  Bliskapaczka\ApiClient\Bliskapaczka\Order\Cancel;
 
+use Bliskapaczka\ApiClient\Config;
 use Bliskapaczka\ApiClient\Mappers\Pricing;
 use PHPUnit\Framework\TestCase;
 
@@ -49,11 +50,26 @@ class CancelTest extends TestCase
 
         $this->deleteInteractions();
         $this->setInteraction();
+
+        $apiKey = 'test-test-test-test';
+        $this->configMock = $this->getMockBuilder(Config::class)
+                                     ->disableOriginalConstructor()
+                                     ->disableOriginalClone()
+                                     ->disableArgumentCloning()
+                                     ->disallowMockingUnknownTypes()
+                                     ->setMethods(
+                                         array(
+                                             'getApiKey'
+                                         )
+                                     )
+                                     ->getMock();
+
+        $this->configMock->method('getApiKey')->will($this->returnValue($apiKey));
     }
 
     public function testCancel()
     {
-        $apiClient = new \Bliskapaczka\ApiClient\Bliskapaczka\Order\Cancel('test-test-test-test');
+        $apiClient = new \Bliskapaczka\ApiClient\Bliskapaczka\Order\Cancel($this->configMock);
         $apiClient->setApiUrl($this->host);
         $apiClient->setOrderId($this->orderId);
 

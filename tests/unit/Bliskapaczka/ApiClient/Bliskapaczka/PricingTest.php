@@ -2,6 +2,7 @@
 
 namespace Bliskapaczka\ApiClient\Bliskapaczka;
 
+use Bliskapaczka\ApiClient\Config;
 use Bliskapaczka\ApiClient\Bliskapaczka\Pricing;
 use PHPUnit\Framework\TestCase;
 
@@ -17,6 +18,21 @@ class PricingTest extends TestCase
                 "weight" => 2
             ]
         ];
+
+        $apiKey = '6061914b-47d3-42de-96bf-0004a57f1dba';
+        $this->configMock = $this->getMockBuilder(Config::class)
+                                     ->disableOriginalConstructor()
+                                     ->disableOriginalClone()
+                                     ->disableArgumentCloning()
+                                     ->disallowMockingUnknownTypes()
+                                     ->setMethods(
+                                         array(
+                                             'getApiKey'
+                                         )
+                                     )
+                                     ->getMock();
+
+        $this->configMock->method('getApiKey')->will($this->returnValue($apiKey));
     }
 
     public function testClassExists()
@@ -26,10 +42,9 @@ class PricingTest extends TestCase
 
     public function testGetUrl()
     {
-        $apiKey = '6061914b-47d3-42de-96bf-0004a57f1dba';
         $apiUrl = 'http://localhost:1234';
         
-        $apiClientPricing = new Pricing($apiKey);
+        $apiClientPricing = new Pricing($this->configMock);
         $apiClientPricing->setApiUrl($apiUrl);
 
         $this->assertEquals('pricing', $apiClientPricing->getUrl());
@@ -37,10 +52,9 @@ class PricingTest extends TestCase
 
     public function testGet()
     {
-        $apiKey = '6061914b-47d3-42de-96bf-0004a57f1dba';
         $apiUrl = 'http://localhost:1234';
         
-        $apiClientPricing = new Pricing($apiKey);
+        $apiClientPricing = new Pricing($this->configMock);
         $apiClientPricing->setApiUrl($apiUrl);
 
         $apiClientPricing->get($this->pricingData);

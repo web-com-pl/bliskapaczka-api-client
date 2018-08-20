@@ -2,6 +2,7 @@
 
 namespace Bliskapaczka\ApiClient\Bliskapaczka;
 
+use Bliskapaczka\ApiClient\Config;
 use Bliskapaczka\ApiClient\Bliskapaczka\Order;
 use PHPUnit\Framework\TestCase;
 
@@ -38,6 +39,21 @@ class OrderTest extends TestCase
                 ]
             ]
         ];
+
+        $apiKey = '6061914b-47d3-42de-96bf-0004a57f1dba';
+        $this->configMock = $this->getMockBuilder(Config::class)
+                                     ->disableOriginalConstructor()
+                                     ->disableOriginalClone()
+                                     ->disableArgumentCloning()
+                                     ->disallowMockingUnknownTypes()
+                                     ->setMethods(
+                                         array(
+                                             'getApiKey'
+                                         )
+                                     )
+                                     ->getMock();
+
+        $this->configMock->method('getApiKey')->will($this->returnValue($apiKey));
     }
 
     public function testClassExists()
@@ -47,10 +63,9 @@ class OrderTest extends TestCase
 
     public function testGetUrlForCreateMethod()
     {
-        $apiKey = '6061914b-47d3-42de-96bf-0004a57f1dba';
         $apiUrl = 'http://localhost:1234';
         
-        $apiClientOrder = new Order($apiKey);
+        $apiClientOrder = new Order($this->configMock);
         $apiClientOrder->setApiUrl($apiUrl);
 
         $this->assertEquals('order', $apiClientOrder->getUrl());
@@ -58,11 +73,10 @@ class OrderTest extends TestCase
 
     public function testGetUrlForGetMethod()
     {
-        $apiKey = '6061914b-47d3-42de-96bf-0004a57f1dba';
         $apiUrl = 'http://localhost:1234';
         $id = '000000001P-000000002';
         
-        $apiClientOrder = new Order($apiKey);
+        $apiClientOrder = new Order($this->configMock);
         $apiClientOrder->setApiUrl($apiUrl);
         $apiClientOrder->setOrderId($id);
 
@@ -71,21 +85,19 @@ class OrderTest extends TestCase
 
     public function testCreate()
     {
-        $apiKey = '6061914b-47d3-42de-96bf-0004a57f1dba';
         $apiUrl = 'http://localhost:1234';
         
-        $apiClientOrder = new Order($apiKey);
+        $apiClientOrder = new Order($this->configMock);
         $apiClientOrder->setApiUrl($apiUrl);
 
         $apiClientOrder->create($this->orderData);
     }
 
     public function testGetValidator()
-    {
-        $apiKey = '6061914b-47d3-42de-96bf-0004a57f1dba';
+    {;
         $apiUrl = 'http://localhost:1234';
         
-        $apiClientOrder = new Order($apiKey);
+        $apiClientOrder = new Order($this->configMock);
         $apiClientOrder->setApiUrl($apiUrl);
 
         $this->assertTrue(is_a($apiClientOrder->getValidator(), 'Bliskapaczka\ApiClient\Validator\Order'));
@@ -101,7 +113,7 @@ class OrderTest extends TestCase
         $apiUrl = 'http://localhost:1234';
         $id = '';
         
-        $apiClientOrder = new Order($apiKey);
+        $apiClientOrder = new Order($this->configMock);
         $apiClientOrder->setApiUrl($apiUrl);
         $apiClientOrder->setOrderId($id);
 
@@ -110,11 +122,10 @@ class OrderTest extends TestCase
 
     public function testGet()
     {
-        $apiKey = '6061914b-47d3-42de-96bf-0004a57f1dba';
         $apiUrl = 'http://localhost:1234';
         $id = '000000001P-000000002';
         
-        $apiClientOrder = new Order($apiKey);
+        $apiClientOrder = new Order($this->configMock);
         $apiClientOrder->setApiUrl($apiUrl);
         $apiClientOrder->setOrderId($id);
 

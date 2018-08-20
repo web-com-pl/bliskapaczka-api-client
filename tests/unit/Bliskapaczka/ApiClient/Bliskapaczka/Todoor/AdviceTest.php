@@ -2,6 +2,7 @@
 
 namespace Bliskapaczka\ApiClient\Bliskapaczka\Todoor;
 
+use Bliskapaczka\ApiClient\Config;
 use Bliskapaczka\ApiClient\Bliskapaczka\Todoor\Advice;
 use PHPUnit\Framework\TestCase;
 
@@ -40,6 +41,21 @@ class TodoorTest extends TestCase
                 ]
             ]
         ];
+
+        $apiKey = '6061914b-47d3-42de-96bf-0004a57f1dba';
+        $this->configMock = $this->getMockBuilder(Config::class)
+                                     ->disableOriginalConstructor()
+                                     ->disableOriginalClone()
+                                     ->disableArgumentCloning()
+                                     ->disallowMockingUnknownTypes()
+                                     ->setMethods(
+                                         array(
+                                             'getApiKey'
+                                         )
+                                     )
+                                     ->getMock();
+
+        $this->configMock->method('getApiKey')->will($this->returnValue($apiKey));
     }
 
     public function testClassExists()
@@ -49,10 +65,9 @@ class TodoorTest extends TestCase
 
     public function testGetUrl()
     {
-        $apiKey = '6061914b-47d3-42de-96bf-0004a57f1dba';
         $apiUrl = 'http://localhost:1234';
         
-        $apiClientTodoor = new Advice($apiKey);
+        $apiClientTodoor = new Advice($this->configMock);
         $apiClientTodoor->setApiUrl($apiUrl);
 
         $this->assertEquals('order/advice/todoor', $apiClientTodoor->getUrl());
@@ -60,10 +75,9 @@ class TodoorTest extends TestCase
 
     public function testCreate()
     {
-        $apiKey = '6061914b-47d3-42de-96bf-0004a57f1dba';
         $apiUrl = 'http://localhost:1234';
         
-        $apiClientTodoor = new Advice($apiKey);
+        $apiClientTodoor = new Advice($this->configMock);
         $apiClientTodoor->setApiUrl($apiUrl);
 
         $apiClientTodoor->create($this->todoorData);
@@ -71,10 +85,9 @@ class TodoorTest extends TestCase
 
     public function testGetValidator()
     {
-        $apiKey = '6061914b-47d3-42de-96bf-0004a57f1dba';
         $apiUrl = 'http://localhost:1234';
         
-        $apiClientTodoor = new Advice($apiKey);
+        $apiClientTodoor = new Advice($this->configMock);
         $apiClientTodoor->setApiUrl($apiUrl);
 
         $this->assertTrue(is_a($apiClientTodoor->getValidator(), 'Bliskapaczka\ApiClient\Validator\Todoor\Advice'));

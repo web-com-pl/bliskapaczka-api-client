@@ -3,6 +3,7 @@
 namespace Bliskapaczka\ApiClient;
 
 use Psr\Log\LoggerInterface;
+use Bliskapaczka\ApiClient\Config;
 use Bliskapaczka\ApiClient\ApiCaller\ApiCaller;
 use Bliskapaczka\ApiClient\Mappers\Order;
 use Bliskapaczka\ApiClient\Exception;
@@ -50,10 +51,14 @@ abstract class AbstractBliskapaczka
      * @param string $bearer
      * @param string $mode
      */
-    public function __construct($bearer, $mode = 'prod')
+    public function __construct($config = null)
     {
-        $this->bearer = (string)$bearer;
-        $this->setApiUrl((string)$this->getApiUrlForMode($mode));
+        if (!$config) {
+            $config = Config::get();
+        }
+
+        $this->bearer = (string)$config->getApiKey();
+        $this->setApiUrl((string)$this->getApiUrlForMode($config->getMode()));
         $this->logger = new Logger();
     }
 
