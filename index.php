@@ -65,7 +65,8 @@ $pricingData = [
             "width" => 20,
             "weight" => 2
         ]
-    ]
+    ],
+    'codValue' => 1
 ];
 var_dump($apiClient->get($pricingData));
 
