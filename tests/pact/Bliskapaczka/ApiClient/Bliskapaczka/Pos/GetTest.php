@@ -81,7 +81,7 @@ class GetTest extends TestCase
   "provider_state": "Return all information about existing point",
   "request": {
     "method": "get",
-    "path": "/api/v2/pos/' . $this->operator . '/' . $this->pointCode . '"
+    "path": "/api/v1/pos/' . $this->operator . '/' . $this->pointCode . '"
   },
   "response": {
     "status": 200,
