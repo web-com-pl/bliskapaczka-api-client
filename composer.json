@@ -2,7 +2,7 @@
     "name": "bliskapaczkapl/bliskapaczka-api-client",
     "description": "BliczkaPaczka API Client",
     "require": {
-        "psr/log": "~1.0.0"
+        "psr/log": "~1.1.0"
     },
     "require-dev": {
         "phpunit/phpunit": "^5.7",
