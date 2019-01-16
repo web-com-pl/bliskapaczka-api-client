@@ -10,6 +10,26 @@ use Bliskapaczka\ApiClient\AbstractBliskapaczka;
  *
  * @author  Mateusz Koszutowski (mkoszutowski@divante.pl)
  */
-class Todoor extends Order implements BliskapaczkaInterface
+class Todoor extends AbstractBliskapaczka implements BliskapaczkaInterface
 {
+
+    const REQUEST_URL = 'config';
+
+    /**
+     * Call API method configuration options
+     *
+     * @return json $response
+     */
+    public function get()
+    {
+        $response = $this->doCall($this->getUrl(), '', array(), 'GET');
+
+        return $response;
+    }
+
+    public function validate(array $data)
+    {
+        return true;
+    }
+
 }
