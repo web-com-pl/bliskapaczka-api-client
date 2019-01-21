@@ -34,7 +34,8 @@ class Order extends AbstractValidator implements ValidatorInterface
         'codValue' => [],
         'codPayoutBankAccountNumber' => [],
         'additionalInformation' => [],
-        'parcel' => []
+        'parcel' => [],
+        'parcels' => []
     ];
 
     /**
