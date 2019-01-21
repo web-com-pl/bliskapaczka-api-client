@@ -15,7 +15,7 @@ abstract class AbstractValidator
 {
     const PHONE_NUMBER_PATTERN = '/^\\d{9}$/';
 
-    const PROPERTY_METHOD_MAP = [
+    protected $operator = [
         'senderEmail' => 'email',
         'receiverEmail' => 'email',
         'senderPhoneNumber' => 'phone',
@@ -60,10 +60,10 @@ abstract class AbstractValidator
     protected function specificValidation($property)
     {
         if (isset($this->data[$property])
-            && isset(self::PROPERTY_METHOD_MAP[$property])
-            && method_exists($this, self::PROPERTY_METHOD_MAP[$property])
+            && isset($this->operator[$property])
+            && method_exists($this, $this->operator[$property])
         ) {
-            call_user_func('self::' . self::PROPERTY_METHOD_MAP[$property], $this->data[$property]);
+            call_user_func('self::' . $this->operator[$property], $this->data[$property]);
         }
     }
 
