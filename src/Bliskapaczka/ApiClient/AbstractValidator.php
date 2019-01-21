@@ -138,6 +138,11 @@ abstract class AbstractValidator
         return true;
     }
 
+    /**
+     * Validate bank account
+     *
+     * @param string $data
+     */
     public static function iban($data)
     {
         if (!empty($data)) {
