@@ -64,6 +64,11 @@ abstract class AbstractValidator
             case 'parcel':
                 self::parcel($this->data[$property]);
                 break;
+            case 'codPayoutBankAccountNumber':
+                if (isset($this->data[$property])) {
+                    self::iban($this->data[$property]);
+                }
+                break;
         }
     }
 
@@ -127,6 +132,17 @@ abstract class AbstractValidator
 
             if (!is_array($phoneNumberMatches) || count($phoneNumberMatches) == 0) {
                 throw new \Bliskapaczka\ApiClient\Exception('Invalid phone number', 1);
+            }
+        }
+
+        return true;
+    }
+
+    public static function iban($data)
+    {
+        if (!empty($data)) {
+            if (!verify_iban('PL' . $data, false)) {
+                throw new \Bliskapaczka\ApiClient\Exception('Invalid CoD Payout Bank Account Number', 1);
             }
         }
 
