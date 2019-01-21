@@ -59,12 +59,12 @@ abstract class AbstractValidator
      */
     protected function specificValidation($property)
     {
-            if (isset($this->data[$property])
-                && isset(self::PROPERTY_METHOD_MAP[$property])
-                && method_exists($this, self::PROPERTY_METHOD_MAP[$property])
-            ) {
-                call_user_func('self::' . self::PROPERTY_METHOD_MAP[$property], $this->data[$property]);
-            }
+        if (isset($this->data[$property])
+            && isset(self::PROPERTY_METHOD_MAP[$property])
+            && method_exists($this, self::PROPERTY_METHOD_MAP[$property])
+        ) {
+            call_user_func('self::' . self::PROPERTY_METHOD_MAP[$property], $this->data[$property]);
+        }
     }
 
     /**
