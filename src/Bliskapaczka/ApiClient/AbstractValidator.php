@@ -15,6 +15,17 @@ abstract class AbstractValidator
 {
     const PHONE_NUMBER_PATTERN = '/^\\d{9}$/';
 
+    const PROPERTY_METHOD_MAP = [
+        'senderEmail' => 'email',
+        'receiverEmail' => 'email',
+        'senderPhoneNumber' => 'phone',
+        'receiverPhoneNumber' => 'phone',
+        'senderPostCode' => 'postCode',
+        'receiverPostCode' => 'postCode',
+        'parcel' => 'parcel',
+        'codPayoutBankAccountNumber' => 'iban'
+    ];
+
     /**
      * Set data to validata
      *
@@ -48,28 +59,12 @@ abstract class AbstractValidator
      */
     protected function specificValidation($property)
     {
-        switch ($property) {
-            case 'senderEmail':
-            case 'receiverEmail':
-                self::email($this->data[$property]);
-                break;
-            case 'senderPhoneNumber':
-            case 'receiverPhoneNumber':
-                self::phone($this->data[$property]);
-                break;
-            case 'senderPostCode':
-            case 'receiverPostCode':
-                self::postCode($this->data[$property]);
-                break;
-            case 'parcel':
-                self::parcel($this->data[$property]);
-                break;
-            case 'codPayoutBankAccountNumber':
-                if (isset($this->data[$property])) {
-                    self::iban($this->data[$property]);
-                }
-                break;
-        }
+            if (isset($this->data[$property])
+                && isset(self::PROPERTY_METHOD_MAP[$property])
+                && method_exists($this, self::PROPERTY_METHOD_MAP[$property])
+            ) {
+                call_user_func('self::' . self::PROPERTY_METHOD_MAP[$property], $this->data[$property]);
+            }
     }
 
     /**
