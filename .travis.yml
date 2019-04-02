@@ -21,7 +21,7 @@ jobs:
         - vendor/bin/phpcs -s --colors --standard=PSR2 src/ tests/
         - vendor/bin/phpmd src/ text codesize
         - vendor/bin/phpcpd src/
-        - vendor/bin/phpdoccheck --directory=src/ 
+        - vendor/bin/phpdoccheck --directory=src/
         - vendor/bin/phploc src/
         - vendor/bin/phpunit --bootstrap tests/bootstrap.php tests/unit/
         - vendor/bin/phpunit --bootstrap tests/bootstrap.php tests/intergation/
