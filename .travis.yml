@@ -9,13 +9,12 @@ php:
 services:
   - docker
 
-before_install:
-  - docker pull madkom/pact-mock-service
-  - docker run -p 1234:1234 -v /tmp/log:/var/log/pacto -v /tmp/contracts:/opt/contracts madkom/pact-mock-service &
-
 jobs:
   include:
     - stage: sca-and-tests
+      before_install:
+      - docker pull madkom/pact-mock-service
+      - docker run -p 1234:1234 -v /tmp/log:/var/log/pacto -v /tmp/contracts:/opt/contracts madkom/pact-mock-service &
       before_script: composer install
       script:
         - vendor/bin/phpcs -s --colors --standard=PSR2 src/ tests/
@@ -30,3 +29,4 @@ jobs:
       script:
         - curl -XPOST -H'content-type:application/json' "https://packagist.org/api/update-package?username=Sendit S.A.&apiToken=$PACKAGIST_API_TOKEN" -d'{"repository":{"url":"https://packagist.org/packages/bliskapaczkapl/bliskapaczka-api-client"}}'
       if: tag
+      php: 7.2
