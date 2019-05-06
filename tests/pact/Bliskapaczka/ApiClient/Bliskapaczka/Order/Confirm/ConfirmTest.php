@@ -28,7 +28,7 @@ class ConfirmTest extends TestCase
 
         $response = json_decode($apiClient->confirm());
 
-        $this->assertTrue(empty($response->status));
+        $this->assertEquals('200', $response->status);
     }
 
     /**
