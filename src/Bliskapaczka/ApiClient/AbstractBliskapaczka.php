@@ -5,7 +5,6 @@ namespace Bliskapaczka\ApiClient;
 use Psr\Log\LoggerInterface;
 use Bliskapaczka\ApiClient\ApiCaller\ApiCaller;
 use Bliskapaczka\ApiClient\Mappers\Order;
-use Bliskapaczka\ApiClient\Exception;
 
 /**
  * Bliskapaczka class
@@ -49,21 +48,46 @@ abstract class AbstractBliskapaczka
     */
     private $apiCaller;
 
+    /** @var string */
+    private $shopName;
+
+    /** @var string  */
+    private $shopVersion;
+
     /**
      * Create Bliskapaczka instance
      *
      * @param string $bearer
      * @param string $mode
      * @param LoggerInterface $logger
+     * @param string $shopName
+     * @param string $shopVersion
+     * @throws \Bliskapaczka\ApiClient\Exception
      */
-    public function __construct($bearer, $mode = 'prod', LoggerInterface $logger = null)
+    public function __construct(
+        $bearer,
+        $mode = 'prod',
+        LoggerInterface $logger = null,
+        $shopName = '',
+        $shopVersion = ''
+    )
     {
         if (!$bearer) {
             throw new Exception("Invalid api key", 1);
         }
 
+        if (!is_string($shopVersion)) {
+            throw new Exception('Shop version must be string', 1);
+        }
+
+        if (!is_string($shopName)) {
+            throw new Exception('Shop name must be string', 1);
+        }
+
         $this->bearer = (string)$bearer;
         $this->mode = (string)$mode;
+        $this->shopName = (string)$shopName;
+        $this->shopVersion = (string)$shopVersion;
         $this->setApiUrl((string)$this->getApiUrlForMode($mode));
 
         $this->logger = new Logger();
@@ -193,6 +217,8 @@ abstract class AbstractBliskapaczka
         // build Authorization header
         $headers[] = 'Authorization: Bearer ' . $this->bearer;
         $headers[] = 'Content-Type: application/json';
+        $headers[] = 'Bp-Source: ' .  $this->shopName;
+        $headers[] = 'Bp-Source-Version' . $this->shopVersion;
 
         // set options
         $options[CURLOPT_URL] = $this->apiUrl . '/' . static::API_VERSION . '/' . $url;
