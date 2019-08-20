@@ -70,26 +70,21 @@ abstract class AbstractBliskapaczka
         LoggerInterface $logger = null,
         $shopName = '',
         $shopVersion = ''
-    )
-    {
+    ) {
         if (!$bearer) {
             throw new Exception("Invalid api key", 1);
         }
-
         if (!is_string($shopVersion)) {
             throw new Exception('Shop version must be string', 1);
         }
-
         if (!is_string($shopName)) {
             throw new Exception('Shop name must be string', 1);
         }
-
         $this->bearer = (string)$bearer;
         $this->mode = (string)$mode;
         $this->shopName = (string)$shopName;
         $this->shopVersion = (string)$shopVersion;
         $this->setApiUrl((string)$this->getApiUrlForMode($mode));
-
         $this->logger = new Logger();
         if ($logger) {
             $this->logger->setLogger($logger);
