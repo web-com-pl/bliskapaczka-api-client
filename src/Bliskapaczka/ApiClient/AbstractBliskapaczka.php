@@ -89,6 +89,7 @@ abstract class AbstractBliskapaczka
         if ($logger) {
             $this->logger->setLogger($logger);
         }
+        $this->logger->debug(dirname(__FILE__));
     }
 
     /**
