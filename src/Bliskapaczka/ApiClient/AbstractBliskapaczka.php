@@ -2,6 +2,7 @@
 
 namespace Bliskapaczka\ApiClient;
 
+use Bliskapaczka\ApiClient\Exception;
 use Psr\Log\LoggerInterface;
 use Bliskapaczka\ApiClient\ApiCaller\ApiCaller;
 use Bliskapaczka\ApiClient\Mappers\Order;
@@ -45,51 +46,32 @@ abstract class AbstractBliskapaczka
 
     /**
      * @var ApiCaller
-    */
+     */
     private $apiCaller;
 
     /** @var string */
-    private $shopName;
+    private $shopName = 'custome';
 
     /** @var string  */
-    private $shopVersion;
+    private $shopVersion = 'undefined';
 
     /**
      * Create Bliskapaczka instance
      *
      * @param string $bearer
      * @param string $mode
-     * @param LoggerInterface $logger
-     * @param string $shopName
-     * @param string $shopVersion
-     * @throws \Bliskapaczka\ApiClient\Exception
      */
-    public function __construct(
-        $bearer,
-        $mode = 'prod',
-        LoggerInterface $logger = null,
-        $shopName = '',
-        $shopVersion = ''
-    ) {
-        if (!$bearer) {
-            throw new Exception("Invalid api key", 1);
-        }
-        if (!is_string($shopVersion)) {
-            throw new Exception('Shop version must be string', 1);
-        }
-        if (!is_string($shopName)) {
-            throw new Exception('Shop name must be string', 1);
-        }
+    public function __construct($bearer, $mode = 'prod')
+    {
         $this->bearer = (string)$bearer;
         $this->mode = (string)$mode;
-        $this->shopName = (string)$shopName;
-        $this->shopVersion = (string)$shopVersion;
         $this->setApiUrl((string)$this->getApiUrlForMode($mode));
         $this->logger = new Logger();
-        if ($logger) {
-            $this->logger->setLogger($logger);
+        try {
+            $this->setShopNameAndVersionFromPath(getcwd());
+        } catch (Exception $exception) {
+            $this->logger->debug($exception->getMessage());
         }
-        $this->logger->debug(dirname(__FILE__));
     }
 
     /**
@@ -191,7 +173,7 @@ abstract class AbstractBliskapaczka
         // Bliskapaczka\ApiClient\Bliskapaczka\Order
         $className = get_class($this);
         $validatorName = str_replace('\Bliskapaczka', '\Validator', $className);
-    
+
         if (!class_exists($validatorName)) {
             throw new Exception('Validator not exists', 1);
         }
@@ -199,6 +181,35 @@ abstract class AbstractBliskapaczka
         return new $validatorName;
     }
 
+    /**
+     * @param string $path
+     * @return $this
+     * @throws \Bliskapaczka\ApiClient\Exception
+     */
+    protected function setShopNameAndVersionFromPath($path)
+    {
+        if (strstr($path, 'wp-content')) {
+            $this->shopName = 'woocommerce';
+            $this->shopVersion = GetterShopVersionFactory::getByShopName('Woocommerce');
+            return $this;
+        }
+        if (strstr($path, 'modules/bliskapaczka/vendor')) {
+            $this->shopName = 'prestashop';
+            $this->shopVersion = GetterShopVersionFactory::getByShopName('PrestaShop');
+            return $this;
+        }
+        if (strstr('app/code/community', 'magento')) {
+            $this->shopName = 'magento';
+            $this->shopVersion = GetterShopVersionFactory::getByShopName('Magento1');
+            return $this;
+        }
+        if (strstr($path, '/vendor/bliskapaczkapl')) {
+            $this->shopName = 'magento';
+            $this->shopVersion = GetterShopVersionFactory::getByShopName('Magento2');
+            return $this;
+        }
+        return $this;
+    }
     /**
      * Create cURL configuration and call
      *
@@ -221,7 +232,7 @@ abstract class AbstractBliskapaczka
         $options[CURLOPT_TIMEOUT] = $this->getApiTimeout();
         $options[CURLOPT_HTTP_VERSION] = CURL_HTTP_VERSION_1_1;
         $options[CURLOPT_HTTPHEADER] = $headers;
-        
+
         if ($method == 'POST') {
             $options[CURLOPT_POST] = true;
             $options[CURLOPT_POSTFIELDS] = $body;
