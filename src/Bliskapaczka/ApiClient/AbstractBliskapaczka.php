@@ -59,9 +59,14 @@ abstract class AbstractBliskapaczka
      *
      * @param string $bearer
      * @param string $mode
+     * @param LoggerInterface $logger
      */
-    public function __construct($bearer, $mode = 'prod')
+    public function __construct($bearer, $mode = 'prod', LoggerInterface $logger = null)
     {
+        if (!$bearer) {
+            throw new Exception("Invalid api key", 1);
+        }
+
         $this->bearer = (string)$bearer;
         $this->mode = (string)$mode;
         $this->setApiUrl((string)$this->getApiUrlForMode($mode));

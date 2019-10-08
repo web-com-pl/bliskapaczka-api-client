@@ -36,6 +36,5 @@ class Woocommerce implements ShopVersionInterface
         } catch (Exception $exception) {
             throw new Exception(sprintf('%s %s', 'It is not Woocommerce.', $exception->getMessage()));
         }
-
     }
 }

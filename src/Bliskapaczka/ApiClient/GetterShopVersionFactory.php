@@ -2,6 +2,10 @@
 
 namespace Bliskapaczka\ApiClient;
 
+/**
+ * Class GetterShopVersionFactory
+ * @package Bliskapaczka\ApiClient
+ */
 class GetterShopVersionFactory
 {
     /**
