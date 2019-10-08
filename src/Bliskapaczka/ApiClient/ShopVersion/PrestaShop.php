@@ -4,6 +4,10 @@ namespace Bliskapaczka\ApiClient\ShopVersion;
 
 use Bliskapaczka\ApiClient\Exception;
 
+/**
+ * Class PrestaShop
+ * @package Bliskapaczka\ApiClient\ShopVersion
+ */
 class PrestaShop implements ShopVersionInterface
 {
 

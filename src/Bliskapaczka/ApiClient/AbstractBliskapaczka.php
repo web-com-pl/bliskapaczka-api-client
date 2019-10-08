@@ -2,7 +2,6 @@
 
 namespace Bliskapaczka\ApiClient;
 
-use Bliskapaczka\ApiClient\Exception;
 use Psr\Log\LoggerInterface;
 use Bliskapaczka\ApiClient\ApiCaller\ApiCaller;
 use Bliskapaczka\ApiClient\Mappers\Order;

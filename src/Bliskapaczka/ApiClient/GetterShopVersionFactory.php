@@ -9,7 +9,8 @@ class GetterShopVersionFactory
      * @return string
      * @throws Exception
      */
-    public static function getByShopName($shopName) {
+    public static function getByShopName($shopName)
+    {
         try {
             $class = '\Bliskapaczka\ApiClient\ShopVersion' . '\\' . $shopName;
             $inst = new $class();
@@ -17,6 +18,5 @@ class GetterShopVersionFactory
         } catch (Exception $exception) {
             throw new Exception($exception->getMessage());
         }
-
     }
 }

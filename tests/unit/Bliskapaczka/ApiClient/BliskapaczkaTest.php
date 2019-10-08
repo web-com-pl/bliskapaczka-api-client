@@ -35,34 +35,6 @@ class BliskapaczkaTest extends TestCase
         $apiClient = new \Bliskapaczka\ApiClient\Bliskapaczka\Pricing($apiKey);
     }
 
-    /**
-     * @expectedException Bliskapaczka\ApiClient\Exception
-     * @expectedExceptionMessage Shop name must be string
-     */
-    public function testNoStringShopName()
-    {
-        $apiKey = '6061914b-47d3-42de-96bf-0004a57f1dba';
-        $apiUrl = 'http://localhost:1234';
-        $apiClient = new \Bliskapaczka\ApiClient\Bliskapaczka\Order($apiKey, 'test', null, 1);
-    }
-
-    /**
-     * @expectedException Bliskapaczka\ApiClient\Exception
-     * @expectedExceptionMessage Shop version must be string
-     */
-    public function testNoStringShopVersion()
-    {
-        $apiKey = '6061914b-47d3-42de-96bf-0004a57f1dba';
-        $apiUrl = 'http://localhost:1234';
-        $apiClient = new \Bliskapaczka\ApiClient\Bliskapaczka\Order(
-            $apiKey,
-            'test',
-            null,
-            'magento',
-            1
-        );
-    }
-
     public function testSetApiUrl()
     {
         $apiKey = '6061914b-47d3-42de-96bf-0004a57f1dba';
