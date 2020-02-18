@@ -23,6 +23,8 @@ class Advice extends Order implements ValidatorInterface
         foreach ($this->properties as $property => $settings) {
             if (!isset($this->data[$property]) && isset($settings['notblank']) && $settings['notblank'] === true) {
                 throw new Exception($property . " is required", 1);
+            } elseif (!isset($this->data[$property]) && isset($settings['notblankor']) && $settings['notblankor'][0] === true && !isset($this->data[$settings['notblankor'][1]])) {
+                throw new Exception($property . " is required", 1);
             }
 
             $this->notBlank($property, $settings);
